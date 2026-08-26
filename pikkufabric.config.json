@@ -1,5 +1,5 @@
 {
-  "projectId": "__PROJECT_ID__",
+  "projectId": "9bffdc7a-7be4-4291-9cfd-4f4da51ffd0d",
   "frontends": {
     "app": {
       "cwd": "apps/app",
