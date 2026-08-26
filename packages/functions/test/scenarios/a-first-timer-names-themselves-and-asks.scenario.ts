@@ -21,10 +21,7 @@ const QUESTION = 'How do streams handle backpressure?'
  * context per actor, so `localStorage` starts empty exactly as it does for someone who
  * has just walked in.
  */
-export const aFirstTimerNamesThemselvesAndAsksScenario = pikkuScenario<
-  void,
-  { asked: string }
->({
+export const aFirstTimerNamesThemselvesAndAsksScenario = pikkuScenario<void, { asked: string }>({
   title: 'A first-time attendee names themselves and asks',
   description: 'The name is asked for once, at the moment it is needed, and remembered',
   tags: ['scenario', 'questions'],
@@ -38,18 +35,28 @@ export const aFirstTimerNamesThemselvesAndAsksScenario = pikkuScenario<
     })
     await scenario.given('the board is clear', 'theBoardIsEmpty', { slotId: 'slot-talk-1' })
 
-    await scenario.when('priya opens the board', 'opensPage', { path: '/app/questions' }, {
-      actor: actors.priya,
-    })
+    await scenario.when(
+      'priya opens the board',
+      'opensPage',
+      { path: '/app/questions' },
+      {
+        actor: actors.priya,
+      },
+    )
     await scenario.when(
       'she types her question',
       'fills',
       { testId: 'questions__placeholder', value: QUESTION },
       { actor: actors.priya },
     )
-    await scenario.when('she posts it', 'clicks', { testId: 'questions__cta' }, {
-      actor: actors.priya,
-    })
+    await scenario.when(
+      'she posts it',
+      'clicks',
+      { testId: 'questions__cta' },
+      {
+        actor: actors.priya,
+      },
+    )
 
     // Only now is she asked who she is.
     await scenario.when(
@@ -58,21 +65,41 @@ export const aFirstTimerNamesThemselvesAndAsksScenario = pikkuScenario<
       { testId: 'common__name', value: 'Priya' },
       { actor: actors.priya },
     )
-    await scenario.when('she confirms it', 'clicks', { testId: 'you__cta' }, {
-      actor: actors.priya,
-    })
+    await scenario.when(
+      'she confirms it',
+      'clicks',
+      { testId: 'you__cta' },
+      {
+        actor: actors.priya,
+      },
+    )
 
-    await scenario.then('her question is on the board', 'seesText', { text: QUESTION }, {
-      actor: actors.priya,
-    })
-    await scenario.then('it carries her name', 'seesText', { text: 'Priya' }, {
-      actor: actors.priya,
-    })
+    await scenario.then(
+      'her question is on the board',
+      'seesText',
+      { text: QUESTION },
+      {
+        actor: actors.priya,
+      },
+    )
+    await scenario.then(
+      'it carries her name',
+      'seesText',
+      { text: 'Priya' },
+      {
+        actor: actors.priya,
+      },
+    )
 
     // The remembering, proven across a full page load rather than a re-render.
-    await scenario.then('she reopens the board', 'opensPage', { path: '/app/questions' }, {
-      actor: actors.priya,
-    })
+    await scenario.then(
+      'she reopens the board',
+      'opensPage',
+      { path: '/app/questions' },
+      {
+        actor: actors.priya,
+      },
+    )
     await scenario.then(
       'she is not asked for her name again',
       'doesNotSeeText',

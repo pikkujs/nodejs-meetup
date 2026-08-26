@@ -30,9 +30,14 @@ export const theJoiningScreenIsProjectableScenario = pikkuScenario<void, { path:
       { actor: actors.priya },
     )
 
-    await scenario.then('the room is invited in', 'seesText', { text: 'Join in' }, {
-      actor: actors.priya,
-    })
+    await scenario.then(
+      'the room is invited in',
+      'seesText',
+      { text: 'Join in' },
+      {
+        actor: actors.priya,
+      },
+    )
     await scenario.then(
       'the room is told what to do with the code',
       'seesText',

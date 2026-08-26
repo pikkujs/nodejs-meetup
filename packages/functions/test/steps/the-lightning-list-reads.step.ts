@@ -50,7 +50,9 @@ export const theLightningListReads = pikkuScenarioStep({
     }
 
     if (index < 0) {
-      throw new Error(`Expected "${name}" on the lightning list, which reads: ${JSON.stringify(names)}.`)
+      throw new Error(
+        `Expected "${name}" on the lightning list, which reads: ${JSON.stringify(names)}.`,
+      )
     }
 
     if (position !== undefined && index + 1 !== position) {

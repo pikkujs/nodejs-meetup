@@ -32,9 +32,9 @@ export const theCurrentSlotIs = pikkuPlatformScenarioStep({
   output: TheCurrentSlotIsOutput,
   func: async (_services, { slotId }) => {
     return withDevDatabase((db) => {
-      const slot = db
-        .prepare('SELECT id, title FROM talk WHERE id = ?')
-        .get(slotId) as { id: string; title: string } | undefined
+      const slot = db.prepare('SELECT id, title FROM talk WHERE id = ?').get(slotId) as
+        | { id: string; title: string }
+        | undefined
 
       if (!slot) {
         throw new Error(

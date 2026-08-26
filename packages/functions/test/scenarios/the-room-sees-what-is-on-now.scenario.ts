@@ -26,15 +26,25 @@ export const theRoomSeesWhatIsOnNowScenario = pikkuScenario<void, { path: string
       slotId: 'slot-talk-1',
     })
 
-    const opened = await scenario.when('priya opens the app', 'opensPage', { path: '/app' }, {
-      actor: actors.priya,
-    })
+    const opened = await scenario.when(
+      'priya opens the app',
+      'opensPage',
+      { path: '/app' },
+      {
+        actor: actors.priya,
+      },
+    )
 
     // The word and the title together: the badge alone appears on any slot, and the
     // title alone appears whether or not it is pinned.
-    await scenario.then('she sees the evening is on talk one', 'seesText', { text: 'Now' }, {
-      actor: actors.priya,
-    })
+    await scenario.then(
+      'she sees the evening is on talk one',
+      'seesText',
+      { text: 'Now' },
+      {
+        actor: actors.priya,
+      },
+    )
     await scenario.then(
       'she sees which talk that is',
       'seesText',

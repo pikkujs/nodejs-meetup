@@ -21,10 +21,7 @@ const PRIYA_DEVICE = 'scenario-device-priya-lightning'
  * the row she reads, not as a missing button. The button's absence follows from the
  * flag; the flag is what a curious person with the network tab open actually meets.
  */
-export const anyoneCanSignUpForALightningTalkScenario = pikkuScenario<
-  void,
-  { position: number }
->({
+export const anyoneCanSignUpForALightningTalkScenario = pikkuScenario<void, { position: number }>({
   title: 'Anyone can put their name down, and take it back',
   description: 'The lightning list is ordered by sign-up and owned by the device that made it',
   tags: ['scenario', 'lightning'],
