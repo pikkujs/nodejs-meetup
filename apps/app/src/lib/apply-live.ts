@@ -69,9 +69,7 @@ function apply(client: QueryClient, event: MeetupLiveEvent) {
               ...board,
               questions: inBoardOrder(
                 board.questions.map((question) =>
-                  question.id === event.questionId
-                    ? { ...question, votes: event.votes }
-                    : question,
+                  question.id === event.questionId ? { ...question, votes: event.votes } : question,
                 ),
               ),
             },
@@ -83,9 +81,7 @@ function apply(client: QueryClient, event: MeetupLiveEvent) {
               ...stage,
               topQuestions: inBoardOrder(
                 stage.topQuestions.map((question) =>
-                  question.id === event.questionId
-                    ? { ...question, votes: event.votes }
-                    : question,
+                  question.id === event.questionId ? { ...question, votes: event.votes } : question,
                 ),
               ),
             },

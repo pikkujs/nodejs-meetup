@@ -1,4 +1,5 @@
 import { pikkuScenario } from '#pikku/scenarios'
+import { copy } from '../lib/copy.js'
 
 /** The question this scenario types, distinctive enough to assert on. */
 const QUESTION = 'How do streams handle backpressure?'
@@ -103,7 +104,7 @@ export const aFirstTimerNamesThemselvesAndAsksScenario = pikkuScenario<void, { a
     await scenario.then(
       'she is not asked for her name again',
       'doesNotSeeText',
-      { text: 'What should we call you?' },
+      { text: copy('you__title') },
       { actor: actors.priya },
     )
 

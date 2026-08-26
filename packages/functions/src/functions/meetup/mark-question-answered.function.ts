@@ -51,11 +51,7 @@ export const markQuestionAnswered = pikkuSessionlessFunc({
     }
 
     const answeredAt = now()
-    await kysely
-      .updateTable('question')
-      .set({ answeredAt })
-      .where('id', '=', questionId)
-      .execute()
+    await kysely.updateTable('question').set({ answeredAt }).where('id', '=', questionId).execute()
 
     await publishLive(
       eventHub,

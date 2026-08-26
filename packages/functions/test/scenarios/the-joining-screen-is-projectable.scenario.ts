@@ -1,4 +1,5 @@
 import { pikkuScenario } from '#pikku/scenarios'
+import { copy } from '../lib/copy.js'
 
 /**
  * Milestone 07 — knowledge/milestones/07-the-room-scans-in.md.
@@ -33,7 +34,7 @@ export const theJoiningScreenIsProjectableScenario = pikkuScenario<void, { path:
     await scenario.then(
       'the room is invited in',
       'seesText',
-      { text: 'Join in' },
+      { text: copy('qr__title') },
       {
         actor: actors.priya,
       },

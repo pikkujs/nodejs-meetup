@@ -211,7 +211,9 @@ const Console: FC<{ passcode: string; onLock: () => void }> = ({ passcode, onLoc
                 variant="default"
                 size="xs"
                 style={{ flex: 'none' }}
-                loading={markAnswered.isPending && markAnswered.variables?.questionId === question.id}
+                loading={
+                  markAnswered.isPending && markAnswered.variables?.questionId === question.id
+                }
                 onClick={() => markAnswered.mutate({ questionId: question.id, passcode })}
               >
                 {m.organiser__mark_answered()}
@@ -263,9 +265,5 @@ export const OrganiserPage: FC = () => {
     setPasscode('')
   }
 
-  return passcode ? (
-    <Console passcode={passcode} onLock={lock} />
-  ) : (
-    <Unlock onUnlocked={unlock} />
-  )
+  return passcode ? <Console passcode={passcode} onLock={lock} /> : <Unlock onUnlocked={unlock} />
 }

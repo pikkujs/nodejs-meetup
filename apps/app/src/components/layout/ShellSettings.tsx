@@ -43,7 +43,13 @@ export const ShellSettings: FC<{ orientation?: 'vertical' | 'horizontal' }> = ({
   const horizontal = orientation === 'horizontal'
 
   const avatar = (
-    <Avatar size={horizontal ? 30 : 32} radius="xl" color="primary" variant="light" name={name ?? ''}>
+    <Avatar
+      size={horizontal ? 30 : 32}
+      radius="xl"
+      color="primary"
+      variant="light"
+      name={name ?? ''}
+    >
       {asI18n(initials(name, ''))}
     </Avatar>
   )

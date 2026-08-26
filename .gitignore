@@ -29,3 +29,6 @@ __fabric_scaffold.vite.config.mjs
 
 # Agent critique/review scratch — local to a working copy, never part of the template
 .impeccable
+
+# Fabric / tooling runtime artifacts
+.opencode

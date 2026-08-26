@@ -1,4 +1,5 @@
 import { pikkuScenario } from '#pikku/scenarios'
+import { copy } from '../lib/copy.js'
 
 /**
  * Milestone 05, through the screen the organiser actually uses.
@@ -43,7 +44,7 @@ export const theOrganiserUnlocksAndRunsTheNightScenario = pikkuScenario<void, { 
     await scenario.then(
       'the schedule control is not on the screen',
       'doesNotSeeText',
-      { text: 'Start the next slot' },
+      { text: copy('organiser__advance') },
       { actor: actors.sam },
     )
 
@@ -71,7 +72,7 @@ export const theOrganiserUnlocksAndRunsTheNightScenario = pikkuScenario<void, { 
     await scenario.then(
       'the screen is still locked',
       'doesNotSeeText',
-      { text: 'Start the next slot' },
+      { text: copy('organiser__advance') },
       { actor: actors.sam },
     )
     await scenario.then(

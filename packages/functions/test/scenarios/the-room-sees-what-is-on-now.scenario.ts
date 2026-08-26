@@ -1,4 +1,5 @@
 import { pikkuScenario } from '#pikku/scenarios'
+import { copy } from '../lib/copy.js'
 
 /**
  * Milestone 01 — knowledge/milestones/01-tonights-schedule.md.
@@ -40,7 +41,7 @@ export const theRoomSeesWhatIsOnNowScenario = pikkuScenario<void, { path: string
     await scenario.then(
       'she sees the evening is on talk one',
       'seesText',
-      { text: 'Now' },
+      { text: copy('tonight__now') },
       {
         actor: actors.priya,
       },

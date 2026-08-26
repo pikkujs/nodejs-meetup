@@ -40,7 +40,9 @@ function navGlyph(d: string): NavIcon {
 /** A clock face: where are we in the evening. */
 export const HomeGlyph = navGlyph('M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 7v5l3 2')
 /** A speech bubble with a raised hand's worth of lines in it. */
-export const QuestionGlyph = navGlyph('M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2ZM8 8h9M8 12h6')
+export const QuestionGlyph = navGlyph(
+  'M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2ZM8 8h9M8 12h6',
+)
 /** A bolt. Five minutes, no slides. */
 export const LightningGlyph = navGlyph('M13 2 4 14h7l-1 8 9-12h-7l1-8Z')
 /** A slider board — the one screen that changes what the room sees. */
