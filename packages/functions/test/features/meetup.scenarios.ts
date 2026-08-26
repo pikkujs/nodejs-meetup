@@ -12,6 +12,7 @@ import { theOrganiserUnlocksAndRunsTheNightScenario } from '../scenarios/the-org
 import { theWallShowsWhatToAskNextScenario } from '../scenarios/the-wall-shows-what-to-ask-next.scenario.js'
 import { theJoiningScreenIsProjectableScenario } from '../scenarios/the-joining-screen-is-projectable.scenario.js'
 import { theEveningRunsItselfScenario } from '../scenarios/the-evening-runs-itself.scenario.js'
+import { theAssistantAnswersFromTheRoomScenario } from '../scenarios/the-assistant-answers-from-the-room.scenario.js'
 
 /**
  * One scenario per gherkin block in knowledge/milestones/, in milestone order.
@@ -42,6 +43,10 @@ export const meetupFeature = pikkuFeature({
     theOrganiserUnlocksAndRunsTheNightScenario,
     theWallShowsWhatToAskNextScenario,
     theJoiningScreenIsProjectableScenario,
+    // Excluded from the default suite by its `ai-live` tag: it costs two model
+    // calls. It still belongs here so `pikku scenario run --tags ai-live` finds it
+    // alongside the rest of the night rather than in a suite of its own.
+    theAssistantAnswersFromTheRoomScenario,
     // Last on purpose — it runs the evening to the end and the workflow is still
     // moving for a moment after. See the note in the scenario.
     theEveningRunsItselfScenario,

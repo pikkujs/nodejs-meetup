@@ -32,4 +32,5 @@ When you summarise, group by theme rather than repeating every question verbatim
   tools: [ref('listAllQuestions'), ref('listSchedule'), ref('askQuestion')],
   maxSteps: 6,
   auth: false,
+  scorers: ['readAloud', 'grounded'],
 })

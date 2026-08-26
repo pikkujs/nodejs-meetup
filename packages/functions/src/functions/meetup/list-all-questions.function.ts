@@ -39,6 +39,7 @@ export const ListAllQuestionsOutput = z.object({
  */
 export const listAllQuestions = pikkuSessionlessFunc({
   expose: true,
+  mcp: true,
   readonly: true,
   auth: false,
   description:

@@ -19,6 +19,7 @@ export const ListScheduleOutput = z.object({
  */
 export const listSchedule = pikkuSessionlessFunc({
   expose: true,
+  mcp: true,
   readonly: true,
   auth: false,
   description: "Tonight's running order, and which slot is current.",
