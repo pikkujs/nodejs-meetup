@@ -11,6 +11,7 @@ import { thePasscodeIsTheGateScenario } from '../scenarios/the-passcode-is-the-g
 import { theOrganiserUnlocksAndRunsTheNightScenario } from '../scenarios/the-organiser-unlocks-and-runs-the-night.scenario.js'
 import { theWallShowsWhatToAskNextScenario } from '../scenarios/the-wall-shows-what-to-ask-next.scenario.js'
 import { theJoiningScreenIsProjectableScenario } from '../scenarios/the-joining-screen-is-projectable.scenario.js'
+import { theEveningRunsItselfScenario } from '../scenarios/the-evening-runs-itself.scenario.js'
 
 /**
  * One scenario per gherkin block in knowledge/milestones/, in milestone order.
@@ -41,5 +42,8 @@ export const meetupFeature = pikkuFeature({
     theOrganiserUnlocksAndRunsTheNightScenario,
     theWallShowsWhatToAskNextScenario,
     theJoiningScreenIsProjectableScenario,
+    // Last on purpose — it runs the evening to the end and the workflow is still
+    // moving for a moment after. See the note in the scenario.
+    theEveningRunsItselfScenario,
   ],
 })
