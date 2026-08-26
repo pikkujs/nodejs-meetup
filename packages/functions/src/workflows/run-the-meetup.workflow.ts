@@ -46,7 +46,8 @@ export const RunTheMeetupOutput = z.object({
  */
 export const runTheMeetup = pikkuWorkflowFunc({
   auth: false,
-  description: 'Run tonight end to end: advance each slot on a clock, summarise each talk as it closes.',
+  description:
+    'Run tonight end to end: advance each slot on a clock, summarise each talk as it closes.',
   input: RunTheMeetupInput,
   output: RunTheMeetupOutput,
   func: async (_services, input, { workflow }) => {

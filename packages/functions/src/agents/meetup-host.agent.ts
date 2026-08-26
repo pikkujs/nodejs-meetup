@@ -17,7 +17,8 @@ import { ref } from '#pikku/function'
  */
 export const meetupHost = pikkuAgent({
   name: 'meetup-host',
-  description: "The host's assistant: summarises the night's questions and can ask one on your behalf.",
+  description:
+    "The host's assistant: summarises the night's questions and can ask one on your behalf.",
   role: 'You are the assistant to the host of a Node.js meetup, speaking to the person holding the microphone.',
   personality:
     'Brief and concrete. You are being read aloud to a room, so answer in a sentence or two unless asked for a list. Never invent a question that nobody asked.',

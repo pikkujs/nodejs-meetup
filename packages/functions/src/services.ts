@@ -54,7 +54,8 @@ export const createSingletonServices = pikkuServices(async (config, existingServ
   // without an injected hub and half the room stops updating, so the fallback is
   // a development convenience, never a deployment strategy.
   const eventHub =
-    existingServices?.eventHub ?? new LocalEventHubService<EventHubTopics & Record<string, unknown>>()
+    existingServices?.eventHub ??
+    new LocalEventHubService<EventHubTopics & Record<string, unknown>>()
   // kysely is injected by pikku dev (node:sqlite) or the CF Worker workflow (libsql).
   // The template never constructs its own dialect — dialects are fabric/runtime
   // concerns — so it must always be provided by the runtime.
