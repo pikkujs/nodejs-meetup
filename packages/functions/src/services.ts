@@ -26,11 +26,17 @@ export const createSingletonServices = pikkuServices(async (config, existingServ
     existingServices?.secrets ?? new TypedSecretService(new LocalSecretService(variables))
   const logger = existingServices?.logger ?? new JsonConsoleLogger()
   const schema = existingServices?.schema ?? new CFWorkerSchemaService(logger)
-  const emailService =
-    existingServices?.emailService ??
-    new GeneratedTemplateEmailService({
-      delegate: new LocalEmailService(),
-    })
+  // The template renderer ALWAYS wraps, and the host's service becomes its
+  // delegate rather than replacing it. Taking `existingServices.emailService`
+  // whole — the obvious `?? new Generated...` — is why the talk-summary email
+  // arrived in `pikku dev` as a template NAME and a data blob: the dev server
+  // injects a bare LocalEmailService, that won, and nothing ever rendered the
+  // handlebars. Wrapping keeps whatever the host configured as the transport
+  // (a relay in a deployed stage, the console locally) and puts the rendering
+  // in front of it, which is where it belongs.
+  const emailService = new GeneratedTemplateEmailService({
+    delegate: existingServices?.emailService ?? new LocalEmailService(),
+  })
   // The durable audit sink. In a deployed stage fabric injects the platform's
   // audit service; locally it falls back to a no-op so nothing is persisted.
   const audit = existingServices?.audit ?? new NoopAuditService()

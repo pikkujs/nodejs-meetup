@@ -22,6 +22,7 @@
     "@ai-sdk/openai-compatible": "^2.0.66",
     "@pikku/addon-admin": "^0.12.1",
     "@pikku/addon-console": "^0.12.45",
+    "@pikku/addon-github": "^0.1.7",
     "@pikku/ai-vercel": "^0.12.13",
     "@pikku/assistant-ui": "^0.12.12",
     "@pikku/better-auth": "^0.12.30",

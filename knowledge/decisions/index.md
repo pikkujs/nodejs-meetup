@@ -12,6 +12,7 @@ tags: [decisions]
 - [One app, three audiences, three paths](one-app-three-paths.md)
 - [Live means polling](live-means-polling.md)
 - [The room pushes over a websocket](the-room-pushes-over-a-websocket.md)
+- [The evening is a workflow, and the clock is a suggestion](the-evening-is-a-workflow.md)
 
 Sub-sections:
 

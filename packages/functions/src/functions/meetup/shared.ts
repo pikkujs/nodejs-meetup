@@ -75,3 +75,20 @@ export const now = () => new Date().toISOString()
  * and they are opaque so nothing downstream can guess the next question's id.
  */
 export const newId = () => crypto.randomUUID()
+
+/**
+ * The payload every outbound job takes: one closed slot, by id.
+ *
+ * Deliberately just the id and not the questions themselves. A job may sit in
+ * the queue through a retry and run minutes after it was enqueued, and the right
+ * summary is the one true when it RUNS — a host who marked two more questions
+ * answered in the meantime should change the email, not be overwritten by the
+ * snapshot the workflow took first.
+ *
+ * It lives here, with the other shared shapes, rather than in whichever function
+ * happened to need it first: a schema re-exported from a function file is not
+ * found by codegen, which reads each function file's own exports.
+ */
+export const TalkJob = z.object({
+  talkId: z.string(),
+})

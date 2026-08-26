@@ -1,0 +1,43 @@
+<p
+  style="margin:0 0 12px;color:{{theme.colors.accent}};font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;"
+>
+  {{appName}}
+</p>
+<h1 style="margin:0 0 4px;color:{{theme.colors.text}};font-size:28px;line-height:1.1;">
+  {{talkTitle}}
+</h1>
+<p style="margin:0 0 24px;color:{{theme.colors.muted}};font-size:16px;line-height:1.6;">
+  {{t.talkSummary.intro}}
+</p>
+
+{{#if questions}}
+<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin:0 0 24px;">
+  {{#each questions}}
+  <tr>
+    <td
+      valign="top"
+      style="width:56px;padding:10px 12px 10px 0;color:{{../theme.colors.accent}};font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;"
+    >
+      {{this.votes}}
+    </td>
+    <td style="padding:10px 0;border-bottom:1px solid {{../theme.colors.muted}}22;">
+      <p style="margin:0 0 4px;color:{{../theme.colors.text}};font-size:16px;line-height:1.5;">
+        {{this.body}}
+      </p>
+      <p style="margin:0;color:{{../theme.colors.muted}};font-size:13px;line-height:1.5;">
+        {{this.authorName}}{{#if this.answered}} · {{../t.talkSummary.answered}}{{/if}}
+      </p>
+    </td>
+  </tr>
+  {{/each}}
+</table>
+{{else}}
+<p style="margin:0 0 24px;color:{{theme.colors.muted}};font-size:16px;line-height:1.6;">
+  {{t.talkSummary.empty}}
+</p>
+{{/if}}
+
+<p style="margin:0;color:{{theme.colors.muted}};font-size:13px;line-height:1.6;">
+  {{t.talkSummary.count}}
+</p>
+{{> footer}}

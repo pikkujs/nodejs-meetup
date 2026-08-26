@@ -1,0 +1,10 @@
+{{talkTitle}}
+
+{{t.talkSummary.intro}}
+
+{{#each questions}}
+{{this.votes}}  {{this.body}}
+    — {{this.authorName}}
+{{/each}}
+
+{{t.talkSummary.count}}
