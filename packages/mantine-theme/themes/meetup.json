@@ -1,0 +1,56 @@
+{
+  "name": "Meetup",
+  "description": "Dark, high-contrast, projector-first. Node green as the only saturated colour, monospace numerals so a rising vote count never shifts the layout.",
+  "brand": {
+    "colors": {
+      "primary": "#5fa04e"
+    },
+    "fonts": {
+      "heading": "JetBrains Mono",
+      "body": "Inter",
+      "mono": "JetBrains Mono"
+    }
+  },
+  "structure": {
+    "defaultRadius": "lg",
+    "autoContrast": true,
+    "primaryShade": { "light": 7, "dark": 4 },
+    "defaultColorScheme": "dark",
+    "radius": {
+      "xs": "4px",
+      "sm": "8px",
+      "md": "12px",
+      "lg": "16px",
+      "xl": "24px"
+    },
+    "shadows": {
+      "xs": "none",
+      "sm": "none",
+      "md": "none",
+      "lg": "none",
+      "xl": "none"
+    },
+    "darkColors": [
+      "#f2f6f0",
+      "#dbe4d8",
+      "#a9b6a5",
+      "#8a9686",
+      "#3a4237",
+      "#2a3027",
+      "#1c211a",
+      "#121611",
+      "#0d100c",
+      "#090b08"
+    ],
+    "components": {
+      "Card": { "defaultProps": { "radius": "lg", "withBorder": true, "shadow": "none" } },
+      "Paper": { "defaultProps": { "radius": "lg", "shadow": "none" } },
+      "Button": { "defaultProps": { "radius": "lg", "size": "md" } },
+      "TextInput": { "defaultProps": { "radius": "lg", "size": "md" } },
+      "Textarea": { "defaultProps": { "radius": "lg", "size": "md" } },
+      "PasswordInput": { "defaultProps": { "radius": "lg", "size": "md" } },
+      "Badge": { "defaultProps": { "radius": "sm" } },
+      "NavLink": { "defaultProps": { "variant": "light" } }
+    }
+  }
+}
