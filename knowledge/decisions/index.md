@@ -11,6 +11,7 @@ tags: [decisions]
 - [The Q&A follows the current talk](qa-follows-the-current-talk.md)
 - [One app, three audiences, three paths](one-app-three-paths.md)
 - [Live means polling](live-means-polling.md)
+- [The room pushes over a websocket](the-room-pushes-over-a-websocket.md)
 
 Sub-sections:
 

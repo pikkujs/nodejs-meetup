@@ -48,9 +48,9 @@ export const QuestionsPage: FC = () => {
   const [draft, setDraft] = useState('')
   const [naming, setNaming] = useState(false)
 
-  // Votes and new questions arrive pushed, over the room's one SSE stream, and
+  // Votes and new questions arrive pushed, over the room's one websocket, and
   // land in this query's cache. The polling below is now the SAFETY NET, not the
-  // mechanism — see knowledge/decisions/design/the-room-pushes.md.
+  // mechanism — see knowledge/decisions/the-room-pushes-over-a-websocket.md.
   useLiveBoard()
 
   const board = usePikkuQuery(
