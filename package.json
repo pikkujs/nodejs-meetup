@@ -35,7 +35,7 @@
     "@pikku/mantine": "^0.12.10",
     "@pikku/react": "^0.12.7",
     "@pikku/schema-cfworker": "^0.12.6",
-    "@pikku/ws": "^0.12.9",
+    "@pikku/ws": "0.12.9",
     "ai": "^6.0.248",
     "ws": "^8.21.3"
   },
