@@ -76,11 +76,6 @@ export const createSingletonServices = pikkuServices(async (config, existingServ
           speech: (modelId: string) => provider.speech(modelId),
         }
         providers = { openai: litellm, anthropic: litellm, google: litellm, deepseek: litellm }
-      } else {
-        const openaiApiKey = await secrets.getSecret('OPENAI_API_KEY')
-        if (openaiApiKey) {
-          providers = { openai: aiSdk.createOpenAI({ apiKey: openaiApiKey.reveal() }) }
-        }
       }
       agentRunner = new aiVercel.VercelAgentRunner(providers)
     }

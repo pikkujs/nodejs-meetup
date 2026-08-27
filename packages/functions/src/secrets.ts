@@ -34,15 +34,3 @@ defineSecret({
   schema: GithubTokenSchema,
   optional: true,
 })
-
-export const OpenaiApiKeySchema = z.string().min(1)
-
-defineSecret({
-  name: 'openaiApiKey',
-  displayName: 'OpenAI API Key',
-  description:
-    'Drives virtual user runs. Unset locally leaves the agent runner without a provider; a deployed stage is handed one by Fabric.',
-  secretId: 'OPENAI_API_KEY',
-  schema: OpenaiApiKeySchema,
-  optional: true,
-})
