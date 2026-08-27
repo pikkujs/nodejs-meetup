@@ -47,6 +47,10 @@ export const QuestionGlyph = navGlyph(
 export const LightningGlyph = navGlyph('M13 2 4 14h7l-1 8 9-12h-7l1-8Z')
 /** A slider board — the one screen that changes what the room sees. */
 export const OrganiserGlyph = navGlyph('M4 6h16M4 12h16M4 18h16M9 4v4M15 10v4M7 16v4')
+/** A QR code's three finder squares. */
+export const QrGlyph = navGlyph(
+  'M4 4h6v6H4ZM14 4h6v6h-6ZM4 14h6v6H4ZM14 14h2v2h-2ZM18 14h2v2h-2ZM14 18h2v2h-2ZM18 18h2v2h-2Z',
+)
 export const AccountGlyph = navGlyph('M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0ZM3 21a7 7 0 0 1 18 0')
 /** Kept for the 'forget my name' row — the nearest thing to signing out this app has. */
 export const SignOutGlyph = navGlyph(
@@ -79,6 +83,7 @@ export function useNavItems(): NavItem[] {
     { to: '/app/questions', label: m.questions__title(), Icon: QuestionGlyph },
     { to: '/app/lightning', label: m.lightning__title(), Icon: LightningGlyph },
     { to: '/app/organiser', label: m.organiser__title(), Icon: OrganiserGlyph },
+    { to: '/app/qr', label: m.qr__title(), Icon: QrGlyph },
   ]
 }
 
