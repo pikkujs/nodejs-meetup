@@ -42,6 +42,14 @@ definePersonas({
     roles: ['attendee'],
     account: {},
   },
+  jonas: {
+    name: 'Jonas',
+    jobTitle: 'speaker',
+    personality:
+      'Has the 20:00 slot. Reads the board between slides to see what is coming, and never posts to it — the questions are about him',
+    roles: ['speaker'],
+    account: {},
+  },
   sam: {
     name: 'Sam',
     jobTitle: 'organiser',

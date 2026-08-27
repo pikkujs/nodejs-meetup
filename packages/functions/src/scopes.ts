@@ -53,6 +53,15 @@ defineSystemRole({
     // a scope nobody was given.
     scopes: [],
   },
+  speaker: {
+    displayName: 'Speaker',
+    description: 'Has a slot on the schedule. The person the questions are aimed at.',
+    // Also empty, for a different reason than the attendee: a speaker is not
+    // short of permission, they are short of anything private to read. The
+    // board for their talk is the same board the room sees, and the one thing
+    // written back — marking a question answered — is the organiser's.
+    scopes: [],
+  },
   organiser: {
     displayName: 'Organiser',
     description: 'Runs the night from the front of the room, holding the shared passcode.',
