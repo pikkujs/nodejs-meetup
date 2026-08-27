@@ -6,15 +6,19 @@ import {
   LocalVariablesService,
   NoopAuditService,
   createInvocationAudit,
+  type AgentRunnerService,
 } from '@pikku/core/services'
 import { LocalEventHubService } from '@pikku/core/channel/local'
-import { createAuditedKysely } from '@pikku/kysely'
+import {
+  KyselyVirtualUserRunStore,
+  KyselyVirtualUserScheduleStore,
+  createAuditedKysely,
+} from '@pikku/kysely'
 import { pikkuServices, pikkuWireServices } from '#pikku/setup'
 import { TypedSecretService } from '../.pikku/secrets/pikku-secrets.gen.js'
 import { TypedVariablesService } from '../.pikku/variables/pikku-variables.gen.js'
 import { CFWorkerSchemaService } from '@pikku/schema-cfworker'
 import type { Kysely } from 'kysely'
-import type { VercelAgentRunner } from '@pikku/ai-vercel'
 import { GeneratedTemplateEmailService } from './lib/email-service.js'
 import { OrganiserGate } from './lib/organiser-gate.js'
 import type { DB } from '#pikku/db/schema.gen.js'
@@ -47,29 +51,38 @@ export const createSingletonServices = pikkuServices(async (config, existingServ
 
   const credentialService = existingServices?.credentialService
 
+  const virtualUserRunStore =
+    existingServices?.virtualUserRunStore ?? new KyselyVirtualUserRunStore(kysely as any)
+  const virtualUserScheduleStore =
+    existingServices?.virtualUserScheduleStore ?? new KyselyVirtualUserScheduleStore(kysely as any)
+
   const litellmProxyUrl = process.env.LITELLM_PROXY_URL ?? null
   const litellmApiKey = process.env.LITELLM_API_KEY ?? null
-  let aiAgentRunner: VercelAgentRunner | undefined
-  if (litellmProxyUrl && litellmApiKey) {
+  let agentRunner: AgentRunnerService | undefined = existingServices?.agentRunner
+  if (!agentRunner) {
     const aiVercel = await import('@pikku/ai-vercel')
     const aiSdk = await import('@ai-sdk/openai')
     if (aiVercel.VercelAgentRunner && aiSdk.createOpenAI) {
-      const provider = aiSdk.createOpenAI({
-        name: 'litellm',
-        baseURL: litellmProxyUrl,
-        apiKey: litellmApiKey,
-      })
-      const litellm = {
-        languageModel: (modelId: string) => provider.chat(modelId),
-        transcription: (modelId: string) => provider.transcription(modelId),
-        speech: (modelId: string) => provider.speech(modelId),
+      let providers = {}
+      if (litellmProxyUrl && litellmApiKey) {
+        const provider = aiSdk.createOpenAI({
+          name: 'litellm',
+          baseURL: litellmProxyUrl,
+          apiKey: litellmApiKey,
+        })
+        const litellm = {
+          languageModel: (modelId: string) => provider.chat(modelId),
+          transcription: (modelId: string) => provider.transcription(modelId),
+          speech: (modelId: string) => provider.speech(modelId),
+        }
+        providers = { openai: litellm, anthropic: litellm, google: litellm, deepseek: litellm }
+      } else {
+        const openaiApiKey = await secrets.getSecret('OPENAI_API_KEY')
+        if (openaiApiKey) {
+          providers = { openai: aiSdk.createOpenAI({ apiKey: openaiApiKey.reveal() }) }
+        }
       }
-      aiAgentRunner = new aiVercel.VercelAgentRunner({
-        openai: litellm,
-        anthropic: litellm,
-        google: litellm,
-        deepseek: litellm,
-      })
+      agentRunner = new aiVercel.VercelAgentRunner(providers)
     }
   }
 
@@ -86,8 +99,10 @@ export const createSingletonServices = pikkuServices(async (config, existingServ
     eventHub,
     kysely,
     scenarioRunStore,
+    virtualUserRunStore,
+    virtualUserScheduleStore,
+    agentRunner,
     ...(credentialService ? { credentialService } : {}),
-    ...(aiAgentRunner ? { aiAgentRunner } : {}),
   }
 })
 
