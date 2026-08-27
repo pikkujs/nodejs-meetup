@@ -1,45 +1,16 @@
 import { useState, type FC } from 'react'
-import {
-  ActionIcon,
-  Alert,
-  Box,
-  Button,
-  Card,
-  Group,
-  Skeleton,
-  Stack,
-  Text,
-  Textarea,
-  Title,
-} from '@pikku/mantine/core'
+import { Alert, Box, Button, Card, Group, Stack, Text, Textarea, Title } from '@pikku/mantine/core'
 import { useQueryClient } from '@tanstack/react-query'
 import { usePikkuMutation, usePikkuQuery } from '@project/functions-sdk/pikku/api.gen'
 import { asI18n, m } from '@/i18n/messages'
 import { useLocale } from '@/i18n/config'
 import { useAttendee } from '@/lib/attendee'
 import { LIVE, live } from '@/lib/live'
-import { useReorderAnimation } from '@/lib/reorder'
 import { NamePrompt } from '@/components/NamePrompt'
-import { RollingNumber } from '@/components/RollingNumber'
+import { QuestionBoard } from '@/components/QuestionBoard'
 
 const MIN_BODY = 3
 const MAX_BODY = 280
-
-/** A chevron, not a heart: this is a queue position, not a like. */
-const UpvoteGlyph: FC = () => (
-  <svg
-    width="18"
-    height="18"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M12 19V5M5 12l7-7 7 7" />
-  </svg>
-)
 
 /**
  * The Q&A board — milestones 02 and 03.
@@ -93,10 +64,6 @@ export const QuestionsPage: FC = () => {
 
   const currentTalk = board.data?.currentTalk
   const questions = board.data?.questions ?? []
-  // Re-run the FLIP measurement whenever the ORDER changes — not whenever the
-  // data does. A vote that leaves the ranking alone should roll the number and
-  // move nothing; keying on the id sequence is what tells those two apart.
-  const listRef = useReorderAnimation(questions.map((question) => question.id).join())
   // An interlude — pizza, the break, doors — has no speaker to ask.
   const closed = currentTalk?.kind === 'interlude'
 
@@ -153,51 +120,13 @@ export const QuestionsPage: FC = () => {
         </Card>
       )}
 
-      {board.isPending ? <Skeleton height={120} radius="lg" /> : null}
-
-      {!board.isPending && !closed && questions.length === 0 ? (
-        <Text c="dimmed" ta="center" py="xl">
-          {m.questions__empty()}
-        </Text>
-      ) : null}
-
-      <Stack gap="sm" ref={listRef}>
-        {questions.map((question) => (
-          <Card key={question.id} data-reorder-key={question.id} withBorder padding="md">
-            <Group wrap="nowrap" align="flex-start" gap="md">
-              {/* The count sits under the control, not beside it, so a thumb that
-                  misses the arrow does not hit the number instead. */}
-              <Stack gap={2} align="center" style={{ flex: 'none', width: 44 }}>
-                <ActionIcon
-                  size="lg"
-                  radius="md"
-                  variant={question.youVoted ? 'filled' : 'default'}
-                  aria-label={question.youVoted ? m.questions__voted() : m.questions__vote()}
-                  aria-pressed={question.youVoted}
-                  // One person, one vote — the server refuses a second, so the
-                  // control refuses first rather than teaching them by failing.
-                  disabled={question.youVoted || !attendeeId}
-                  onClick={() => upvote.mutate({ questionId: question.id, attendeeId })}
-                >
-                  <UpvoteGlyph />
-                </ActionIcon>
-                <RollingNumber
-                  value={question.votes}
-                  fontSize="var(--mantine-font-size-sm)"
-                  label={m.questions__votes_label()}
-                />
-              </Stack>
-
-              <Box style={{ minWidth: 0 }}>
-                <Text lh={1.45}>{asI18n(question.body)}</Text>
-                <Text fz="xs" c="dimmed" mt={6}>
-                  {asI18n(question.authorName)}
-                </Text>
-              </Box>
-            </Group>
-          </Card>
-        ))}
-      </Stack>
+      <QuestionBoard
+        questions={questions}
+        isPending={board.isPending}
+        interlude={closed}
+        canVote={Boolean(attendeeId)}
+        onUpvote={(questionId) => upvote.mutate({ questionId, attendeeId })}
+      />
 
       {upvote.isError ? (
         <Text fz="sm" c="red">
