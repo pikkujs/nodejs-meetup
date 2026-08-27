@@ -13,26 +13,13 @@
  * NOTE ON SESSIONS: no attendee ever signs in to this app — see
  * knowledge/decisions/security/nobody-signs-in.md. These accounts exist ONLY so
  * pikku's scenario runner has a real session to drive a browser with; the product
- * itself never asks for one. The `organiser` role likewise documents the second
- * audience — the actual organiser gate is the shared passcode, enforced as a
- * permission (knowledge/decisions/security/one-shared-passcode.md), because the
- * person running the night is whoever is standing at the front, not an account.
+ * itself never asks for one. The roles these personas name are declared in
+ * src/scopes.ts — the actual organiser gate is the shared passcode, enforced as
+ * a permission (knowledge/decisions/security/one-shared-passcode.md), because
+ * the person running the night is whoever is standing at the front, not an
+ * account.
  */
 import { definePersonas } from '#pikku/scopes/pikku-personas.gen.js'
-import { defineSystemRole } from '@pikku/core/role'
-
-defineSystemRole({
-  attendee: {
-    displayName: 'Attendee',
-    description: 'In the room with a phone. No account, no login — a name typed once.',
-    scopes: [],
-  },
-  organiser: {
-    displayName: 'Organiser',
-    description: 'Runs the night from the front of the room, holding the shared passcode.',
-    scopes: [],
-  },
-})
 
 definePersonas({
   priya: {
