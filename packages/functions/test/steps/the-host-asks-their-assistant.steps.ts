@@ -14,7 +14,7 @@ export const theHostAsksTheirAssistant = pikkuScenarioStep({
   name: 'theHostAsksTheirAssistant',
   actor: true,
   description: "asks the host's assistant a question",
-  template: 'the host asks their assistant: {message}',
+  template: 'asks their assistant: {message}',
   input: TheHostAsksTheirAssistantInput,
   output: TheHostAsksTheirAssistantOutput,
   default: async (_services, { message }, { actor }) => {

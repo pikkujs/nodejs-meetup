@@ -14,7 +14,7 @@ export const SweepsAllPagesOutput = z.object({
 export const sweepsAllPages = pikkuScenarioStep({
   name: 'sweepsAllPages',
   description: 'visits every static route and fails on any runtime error',
-  template: 'every page loads without errors',
+  template: 'loads every page without errors',
   input: SweepsAllPagesInput,
   output: SweepsAllPagesOutput,
   browser: async (_services, { repoRoot }, { browser }) => {

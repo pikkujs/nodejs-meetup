@@ -17,7 +17,7 @@ export const theRoomReaches = pikkuScenarioStep({
   name: 'theRoomReaches',
   actor: true,
   description: 'waits for the running order to arrive at a slot',
-  template: 'the room reaches {slotId}',
+  template: 'sees the room reach {slotId}',
   input: TheRoomReachesInput,
   output: TheRoomReachesOutput,
   default: async (_services, { slotId, withinMs }, { actor }) => {

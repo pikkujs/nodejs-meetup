@@ -14,7 +14,7 @@ export const theRoomIsOn = pikkuScenarioStep({
   name: 'theRoomIsOn',
   actor: true,
   description: 'asserts which slot the public schedule marks as current',
-  template: 'the room is on {slotId}',
+  template: 'sees the room on {slotId}',
   input: TheRoomIsOnInput,
   output: TheRoomIsOnOutput,
   default: async (_services, { slotId }, { actor }) => {

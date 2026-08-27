@@ -17,7 +17,7 @@ export const theWallShows = pikkuScenarioStep({
   name: 'theWallShows',
   actor: true,
   description: 'asserts what the projected stage view shows',
-  template: 'the wall shows {topQuestion} under {talkTitle}',
+  template: 'sees the wall show {topQuestion} under {talkTitle}',
   input: TheWallShowsInput,
   output: TheWallShowsOutput,
   default: async (_services, { talkTitle, topQuestion, atMost }, { actor }) => {

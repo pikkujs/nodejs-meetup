@@ -22,7 +22,7 @@ export const theOrganiserActs = pikkuScenarioStep({
   name: 'theOrganiserActs',
   actor: true,
   description: 'performs an organiser action with the real passcode',
-  template: 'the organiser does {action}',
+  template: 'does {action}',
   input: TheOrganiserActsInput,
   output: TheOrganiserActsOutput,
   default: async (

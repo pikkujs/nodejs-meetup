@@ -18,7 +18,7 @@ export const theLightningListReads = pikkuScenarioStep({
   name: 'theLightningListReads',
   actor: true,
   description: 'asserts who is on the lightning list and in what order',
-  template: 'the lightning list has {name} at {position}',
+  template: 'sees {name} at {position} on the lightning list',
   input: TheLightningListReadsInput,
   output: TheLightningListReadsOutput,
   default: async (_services, { name, position, attendeeId, isYours, present }, { actor }) => {

@@ -16,7 +16,7 @@ export const theVoteIsRefused = pikkuScenarioStep({
   name: 'theVoteIsRefused',
   actor: true,
   description: 'asserts a repeat vote is refused and the count is unchanged',
-  template: 'a second vote on {questionId} is refused',
+  template: 'is refused a second vote on {questionId}',
   input: TheVoteIsRefusedInput,
   output: TheVoteIsRefusedOutput,
   default: async (_services, { questionId, attendeeId, votes }, { actor }) => {

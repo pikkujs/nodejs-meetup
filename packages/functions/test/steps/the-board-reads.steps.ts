@@ -18,7 +18,7 @@ export const theBoardReads = pikkuScenarioStep({
   name: 'theBoardReads',
   actor: true,
   description: 'reads the board and asserts what is on it',
-  template: 'the board has {top} on top',
+  template: 'sees {top} on top of the board',
   input: TheBoardReadsInput,
   output: TheBoardReadsOutput,
   default: async (_services, { top, absent, count, attendeeId }, { actor }) => {
