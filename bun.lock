@@ -9,7 +9,6 @@
         "@ai-sdk/openai-compatible": "^2.0.66",
         "@pikku/addon-admin": "^0.12.1",
         "@pikku/addon-console": "^0.12.47",
-        "@pikku/addon-github": "^0.1.8",
         "@pikku/ai-vercel": "^0.12.13",
         "@pikku/assistant-ui": "^0.12.12",
         "@pikku/better-auth": "^0.12.31",
@@ -84,7 +83,6 @@
         "@ai-sdk/openai-compatible": "^2.0.48",
         "@pikku/addon-admin": "^0.12.1",
         "@pikku/addon-console": "^0.12.47",
-        "@pikku/addon-github": "^0.1.8",
         "@pikku/ai-vercel": "^0.12.13",
         "@pikku/better-auth": "^0.12.31",
         "@pikku/cloudflare": "^0.12.22",
@@ -436,8 +434,6 @@
     "@pikku/addon-admin": ["@pikku/addon-admin@0.12.1", "", { "peerDependencies": { "@pikku/better-auth": "^0.12.26", "@pikku/core": "^0.12.85", "zod": "^4" }, "optionalPeers": ["@pikku/better-auth"] }, "sha512-4/MAbljQaR9bte/SeL7HAAzyWnOkKuHIXYzyGyOQpvJUTxlvTZlv9tbsF3PTIInGqt6IwoY5ePe0nekxVpRNwA=="],
 
     "@pikku/addon-console": ["@pikku/addon-console@0.12.47", "", { "dependencies": { "@pikku/code-edit": "^0.12.1", "@pikku/knowledge": "^0.12.7", "json-schema": "^0.4.0", "open": "^11.0.1" }, "peerDependencies": { "@pikku/better-auth": "^0.12.26", "@pikku/core": "^0.12.90" }, "optionalPeers": ["@pikku/better-auth"] }, "sha512-lZfPw0/aEVf8eWmlPN0SnOw+N98+sd7f4FgpBH7Cu5AMbZ4vpTBNTOG1tHnqvL1TkydKDalbeJrpSX8BaOQiuA=="],
-
-    "@pikku/addon-github": ["@pikku/addon-github@0.1.8", "", { "peerDependencies": { "@pikku/core": "^0.12.89", "zod": "^4" } }, "sha512-I+JettKlmj5l7nO0Qak8vieTLYirPCUI8wnjR5C/MOMQDnxis/32NV52/V6Ze9GnG7vYQqJ9T6OouAEBHYLuPw=="],
 
     "@pikku/ai-vercel": ["@pikku/ai-vercel@0.12.13", "", { "peerDependencies": { "@pikku/core": "^0.12.88", "ai": "^7.0.0" } }, "sha512-iAntlwFf+caE1DQ5lULocxF19Ci1avirABJGq1ZmupDFDduLmqFaTpmqgtEw9KuOez2ZR1H0SA26oFR6B4i/OA=="],
 

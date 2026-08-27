@@ -32,7 +32,7 @@ returning 500 until it restarts.
 | **Workflow** | `workflows/run-the-meetup.workflow.ts` | `startMeetupRun` below — the whole evening in a minute. |
 | **Scheduler** | `schedules/start-the-meetup.schedule.ts` | Starts the same workflow at 18:30 on a Thursday. |
 | **Queue** | `queues/outbound.queue.ts` | Two workers pick up as each talk closes. Watch the dev log. |
-| **Addon** | `addons/github.addon.ts` | Unanswered questions become issues. Needs `GITHUB_TOKEN` + `GITHUB_ISSUES_REPO`. |
+| **Addon** | `addons/admin.addon.ts` | Scoped user admin — list, ban, view-as — without writing a screen for it. |
 | **Email** | `emails/templates/talk-summary.*` | Rendered and logged by `LocalEmailService` as each talk closes. |
 
 ### Run the whole evening in a minute
@@ -53,12 +53,21 @@ deliberate: see
 
 Note the RPC envelope — `{"rpcName": ..., "data": ...}`, not the bare input.
 
-### Without a GitHub token
+### The GitHub issues worker opens nothing
 
-The `github-issues` worker retries three times and then fails the job with
-`No GitHub connection — connect GitHub first`. That is the addon reporting an
-unset credential, not a bug. Set `GITHUB_TOKEN` in `.env` to see it file real
-issues.
+`closeSlot` still queues `github-issues` as each talk ends, the worker still
+runs, and it logs the issue it would have opened for every unanswered question.
+It files none.
+
+`@pikku/addon-github` used to do the filing, and it is no longer wired: the
+addon registers 811 functions and 1,416 schemas at module top level, which costs
+more than Cloudflare allows a Worker at startup, so the worker failed to boot at
+all — [pikkujs/pikku#1497](https://github.com/pikkujs/pikku/issues/1497).
+`functions/meetup/create-github-issue.function.ts` is the stand-in, and the
+place a direct `fetch` goes when the questions should really outlive the night.
+
+`GITHUB_TOKEN` and `GITHUB_ISSUES_REPO` are still declared and still read, so
+nothing about the configuration has to be rediscovered when that happens.
 
 ## Checks
 

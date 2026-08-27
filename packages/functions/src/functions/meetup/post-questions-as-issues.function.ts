@@ -23,6 +23,9 @@ export const PostQuestionsAsIssuesOutput = z.object({
  * failure throws, the job retries, and the questions already filed are filed
  * again — accepted, because a duplicate issue is cheap and a lost question is
  * the thing this exists to prevent.
+ *
+ * `createGithubIssue` currently opens nothing — see that function for why the
+ * addon is gone and why this path was kept whole anyway.
  */
 export const postQuestionsAsIssues = pikkuSessionlessFunc({
   auth: false,
@@ -44,7 +47,7 @@ export const postQuestionsAsIssues = pikkuSessionlessFunc({
 
     let filed = 0
     for (const question of talk.questions) {
-      await rpc.invoke('github:issuesCreate', {
+      await rpc.invoke('createGithubIssue', {
         owner: repo.owner,
         repo: repo.repo,
         title: question.body.length > 80 ? `${question.body.slice(0, 77)}...` : question.body,

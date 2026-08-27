@@ -16,9 +16,10 @@ import { pikkuScenario } from '#pikku/scenarios'
  *
  * Be honest about what is ASSERTED, though: only the route. The queue work happens
  * downstream of an assertion this scenario cannot make from outside — a summary email
- * goes to a log, and `github-issues` is EXPECTED to fail without a token. What this
- * buys is that those functions execute in CI and a throw inside them shows up in the
- * server log, which is a great deal more than the nothing they had before.
+ * goes to a log, and `github-issues` reaches a stand-in that opens no issue and logs
+ * the one it would have. What this buys is that those functions execute in CI and a
+ * throw inside them shows up in the server log, which is a great deal more than the
+ * nothing they had before.
  *
  * The durations are a second each, deliberately: `startMeetupRun`'s defaults are the
  * demo's (20s/10s), and a suite that used them would take three minutes.

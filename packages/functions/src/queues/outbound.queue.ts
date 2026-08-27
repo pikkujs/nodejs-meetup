@@ -18,24 +18,31 @@ import { postQuestionsAsIssues } from '../functions/meetup/post-questions-as-iss
  */
 
 /**
- * Hands the GitHub addon its token.
+ * Carries the GitHub token to the worker, for when there is something to carry
+ * it to.
  *
- * `@pikku/addon-github` reads `wire.getCredential('github')`, and credentials
- * resolve PER USER: `defaultPikkuUserIdResolver` looks for a session, and a
- * queue job has none. So there is nobody for the credential store to look the
- * token up under, and the addon would fail every job with "connect GitHub
- * first" no matter what the store held.
+ * `@pikku/addon-github` used to read `wire.getCredential('github')`, and
+ * credentials resolve PER USER: `defaultPikkuUserIdResolver` looks for a
+ * session and a queue job has none, so the token had to be written onto the
+ * wire directly. The addon is gone (pikkujs/pikku#1497) and the worker now
+ * calls a local stand-in that opens nothing, so this sets a credential nobody
+ * reads.
  *
- * `setCredential` is the documented way past that — it writes onto the wire
- * directly, ahead of the lazy load. This is the one place the token is read,
- * and it is read from `secrets`, never from a function body.
+ * It is kept because it is the seam: this is the ONE place the token is read,
+ * and it is read from `secrets`, never from a function body. Whatever replaces
+ * the addon — the addon fixed, or a direct `fetch` — collects it here, and that
+ * rule survives the gap instead of being re-derived after it.
  *
- * An absent token is left absent rather than defaulted: the worker then reports
- * the addon's own unauthorized error, which says what is wrong, instead of a
- * 401 from GitHub about a token that was never set.
+ * An absent token is left absent rather than defaulted, so the failure names
+ * the missing token rather than arriving as a 401 about one that was never set.
+ *
+ * No `.catch` around `getSecret`. GITHUB_TOKEN is declared `optional: true`, so
+ * the generated map types it as an optional property and an unset token RESOLVES
+ * to undefined — a rejection here would mean the secret store itself is broken,
+ * and swallowing that would report a real outage as "no token configured".
  */
 const withGithubToken = pikkuMiddleware(async ({ secrets }, { setCredential }, next) => {
-  const token = await secrets.getSecret('GITHUB_TOKEN').catch(() => null)
+  const token = await secrets.getSecret('GITHUB_TOKEN')
   if (token) {
     setCredential?.('github', { accessToken: token.reveal() })
   }

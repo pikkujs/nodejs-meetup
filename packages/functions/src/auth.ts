@@ -31,11 +31,10 @@ export const auth = pikkuBetterAuth(async ({ kysely, secrets, variables, emailSe
   const BETTER_AUTH_SECRET = (await secrets.getSecret('BETTER_AUTH_SECRET')).reveal()
   // Genuinely optional: unset simply disables /api/auth/sign-in/actor (scenarios
   // off for this deployment) — the actor plugin refuses all sign-ins
-  // without it.
-  const SCENARIO_ACTOR_SECRET = await secrets
-    .getSecret('SCENARIO_ACTOR_SECRET')
-    .then((value) => value?.reveal())
-    .catch(() => undefined)
+  // without it. Declared `optional: true`, so an unset secret RESOLVES to
+  // undefined and `?.reveal()` is the whole handling; a `.catch` here would only
+  // hide a broken secret store behind "scenarios are off".
+  const SCENARIO_ACTOR_SECRET = (await secrets.getSecret('SCENARIO_ACTOR_SECRET'))?.reveal()
   // Fabric operator admin: the RSA public key the control plane's token is
   // verified against. The Fabric deployer pushes FABRIC_AUTH_PUBLIC_KEY onto
   // every stage; locally it's simply absent, which disables /sign-in/fabric.
