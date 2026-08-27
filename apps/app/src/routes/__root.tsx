@@ -199,10 +199,12 @@ function RootDocument({ children }: { children: ReactNode }) {
   // Per-render instances keep server requests from sharing client/cache state.
   const [queryClient] = useState(() => new QueryClient())
   const [pikku] = useState(() =>
-    // PikkuRealtime is passed as the third class so the SSE stream inherits the
-    // same serverUrl and credentials as HTTP and RPC — configured once, never
-    // twice. Without it `usePikkuRealtime()` throws, which is how a missing wire
-    // announces itself rather than silently degrading to a dead stream.
+    // PikkuRealtime is passed as the third class so a realtime stream would
+    // inherit the same serverUrl and credentials as HTTP and RPC — configured
+    // once, never twice. Nothing subscribes today (the UI polls, see
+    // lib/live.ts) and no connection is opened until something calls
+    // `usePikkuRealtime().subscribe`, so this costs a line and saves rewiring
+    // when the channel comes back.
     createPikku(PikkuFetch, PikkuRPC, PikkuRealtime, {
       serverUrl: apiUrl(),
       credentials: 'include',

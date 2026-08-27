@@ -4,7 +4,6 @@ import { usePikkuQuery } from '@project/functions-sdk/pikku/api.gen'
 import { asI18n, m } from '@/i18n/messages'
 import { useLocale } from '@/i18n/config'
 import { liveOnStage } from '@/lib/live'
-import { useLiveBoard } from '@/lib/apply-live'
 import { useReorderAnimation } from '@/lib/reorder'
 import { QrCode } from '@/components/QrCode'
 import { RollingNumber } from '@/components/RollingNumber'
@@ -20,10 +19,6 @@ import { RollingNumber } from '@/components/RollingNumber'
  */
 export const StagePage: FC = () => {
   useLocale()
-  // The wall is the screen this matters most on: it is watched continuously by
-  // forty people and touched by nobody, so a question arriving three seconds late
-  // is three seconds of a room looking at a stale board.
-  useLiveBoard()
   const stage = usePikkuQuery('getStageView', {}, liveOnStage())
 
   const current = stage.data?.currentTalk

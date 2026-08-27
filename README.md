@@ -27,7 +27,7 @@ returning 500 until it restarts.
 | Wire | Where | How to see it |
 | --- | --- | --- |
 | **HTTP + RPC** | `packages/functions/src/functions/meetup/` | The app itself. Open /app on a phone. |
-| **Channel** (websocket) | `eventhub-topics.d.ts`, `functions/meetup/live.ts` | Two phones on /app/questions. Vote on one; the number moves on the other. |
+| **Channel** (websocket) | `eventhub-topics.d.ts`, `functions/meetup/live.ts` | Broadcasts every room event. Wired and inspectable; the UI polls instead — see `lib/live.ts`. |
 | **Agent** | `agents/meetup-host.agent.ts` | Ask it "what did the room ask tonight". Needs `LITELLM_PROXY_URL` and `LITELLM_API_KEY`. |
 | **Workflow** | `workflows/run-the-meetup.workflow.ts` | `startMeetupRun` below — the whole evening in a minute. |
 | **Scheduler** | `schedules/start-the-meetup.schedule.ts` | Starts the same workflow at 18:30 on a Thursday. |

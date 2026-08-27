@@ -18,7 +18,6 @@ import { asI18n, m } from '@/i18n/messages'
 import { useLocale } from '@/i18n/config'
 import { useAttendee } from '@/lib/attendee'
 import { LIVE, live } from '@/lib/live'
-import { useLiveBoard } from '@/lib/apply-live'
 import { useReorderAnimation } from '@/lib/reorder'
 import { NamePrompt } from '@/components/NamePrompt'
 import { RollingNumber } from '@/components/RollingNumber'
@@ -56,11 +55,6 @@ export const QuestionsPage: FC = () => {
   const { id: attendeeId, name } = useAttendee()
   const [draft, setDraft] = useState('')
   const [naming, setNaming] = useState(false)
-
-  // Votes and new questions arrive pushed, over the room's one websocket, and
-  // land in this query's cache. The polling below is now the SAFETY NET, not the
-  // mechanism — see knowledge/decisions/the-room-pushes-over-a-websocket.md.
-  useLiveBoard()
 
   const board = usePikkuQuery(
     'listQuestions',

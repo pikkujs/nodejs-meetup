@@ -16,7 +16,6 @@ import { usePikkuQuery } from '@project/functions-sdk/pikku/api.gen'
 import { asI18n, m } from '@/i18n/messages'
 import { useLocale } from '@/i18n/config'
 import { LIVE, live } from '@/lib/live'
-import { useLiveBoard } from '@/lib/apply-live'
 
 type Slot = ReturnType<typeof useSchedule>['slots'][number]
 
@@ -56,9 +55,6 @@ const SlotRow: FC<{ slot: Slot; dim?: boolean }> = ({ slot, dim }) => (
  */
 export const TonightPage: FC = () => {
   useLocale()
-  // Same one stream as every other screen; this page cares only about
-  // schedule-advanced and lightning-changed, and ignores the rest.
-  useLiveBoard()
   const { slots, isPending, isError } = useSchedule()
 
   const currentIndex = slots.findIndex((slot) => slot.isCurrent)

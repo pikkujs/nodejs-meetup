@@ -18,7 +18,6 @@ import { asI18n, m } from '@/i18n/messages'
 import { useLocale } from '@/i18n/config'
 import { useAttendee } from '@/lib/attendee'
 import { LIVE, live } from '@/lib/live'
-import { useLiveBoard } from '@/lib/apply-live'
 import { NamePrompt } from '@/components/NamePrompt'
 
 const MIN_TOPIC = 3
@@ -33,9 +32,6 @@ const MAX_TOPIC = 80
  */
 export const LightningPage: FC = () => {
   useLocale()
-  // Same one stream as every other screen; this page cares only about
-  // schedule-advanced and lightning-changed, and ignores the rest.
-  useLiveBoard()
   const queryClient = useQueryClient()
   const { id: attendeeId, name } = useAttendee()
   const [topic, setTopic] = useState('')

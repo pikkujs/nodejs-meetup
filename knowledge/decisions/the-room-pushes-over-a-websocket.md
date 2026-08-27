@@ -7,6 +7,16 @@ tags: [decisions, architecture, realtime]
 
 # The room pushes over a websocket
 
+> **Reverted in the UI, 27 Aug 2026.** The channel is still wired and still
+> broadcasts — `functions/meetup/live.ts`, `eventhub-topics.d.ts` — but no screen
+> subscribes to it any more. The frontend is back to the intervals in
+> [live means polling](live-means-polling.md), which had never been removed.
+> The reason is not the argument below, which still holds: the channel had not
+> been tested under the conditions it would actually meet — a venue's wifi, forty
+> phones, a projector left open all evening — and the night of a talk is a bad
+> time to find out. Everything from "Why this changed" down is the case for
+> putting it back, once it has been.
+
 Votes, new questions, answered questions, schedule advances and lightning
 changes are pushed to every phone and to the projector over a single websocket.
 The polling in [live means polling](live-means-polling.md) is still there, at the
