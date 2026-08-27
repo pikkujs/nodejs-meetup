@@ -1,4 +1,5 @@
 import {
+  FileScenarioRunStore,
   JsonConsoleLogger,
   LocalEmailService,
   LocalSecretService,
@@ -38,6 +39,11 @@ export const createSingletonServices = pikkuServices(async (config, existingServ
     throw new Error('kysely service was not injected by the runtime (pikku dev / fabric)')
   }
   const kysely: Kysely<DB> = existingServices.kysely
+
+  const scenarioRunsDir = process.env.SCENARIO_RUNS_DIR
+  const scenarioRunStore = scenarioRunsDir
+    ? new FileScenarioRunStore({ dir: scenarioRunsDir })
+    : null
 
   const credentialService = existingServices?.credentialService
 
@@ -79,6 +85,7 @@ export const createSingletonServices = pikkuServices(async (config, existingServ
     organiserGate,
     eventHub,
     kysely,
+    scenarioRunStore,
     ...(credentialService ? { credentialService } : {}),
     ...(aiAgentRunner ? { aiAgentRunner } : {}),
   }
