@@ -3,17 +3,6 @@ import { pikkuScenario } from '#pikku/scenarios'
 const BACKPRESSURE = 'How do streams handle backpressure?'
 const PRIYA_DEVICE = 'scenario-device-priya-answered'
 
-/**
- * Milestone 05, second scenario.
- *
- *   Given 'priya' has asked about backpressure
- *   When 'sam' marks it answered
- *   Then it is gone from the board
- *
- * GONE, not greyed out — knowledge/decisions/design/the-board-is-a-queue.md. A board
- * that keeps answered questions is a transcript, and a transcript on a projector wastes
- * the three lines the room can actually read.
- */
 export const aQuestionComesOffTheBoardScenario = pikkuScenario<void, { remaining: number }>({
   title: 'A question comes off the board once it is answered',
   description: 'Marking a question answered removes it from the queue',

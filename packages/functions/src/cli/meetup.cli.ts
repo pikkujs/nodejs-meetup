@@ -8,18 +8,6 @@ import {
 import { ListScheduleOutput, listSchedule } from '../functions/meetup/list-schedule.function.js'
 import { startMeetupRun } from '../functions/meetup/start-meetup-run.function.js'
 
-/**
- * The night from a terminal, for the ten minutes before anyone has a browser open.
- *
- * Every command here is the SAME function the room's phones call — no CLI-only path
- * into the database, so a command cannot drift from what the app does. That is also
- * why `--passcode` is an option on the two organiser commands rather than something
- * this reads from the environment: the passcode gates the function, and the CLI is
- * just another caller holding it (knowledge/decisions/security/one-shared-passcode.md).
- * Typing it on the command line does leave it in shell history, which is a fair trade
- * for a door code that is said aloud to the room and rotated between meetups — but it
- * is the reason there is no `meetup passcode` command to print it.
- */
 const renderSchedule = pikkuCLIRender<z.infer<typeof ListScheduleOutput>>(
   (_services, { slots }) => {
     for (const slot of slots) {

@@ -2,7 +2,6 @@ import { defineVariable } from '@pikku/core/variable'
 import { z } from 'zod'
 import type { SingletonServices } from '#pikku/function'
 
-// The CLI requires `schema` to be a named export, not an inline `z.string()`.
 export const CorsOriginsSchema = z.string()
 export const FrontendUrlSchema = z.string()
 
@@ -26,21 +25,6 @@ defineVariable({
   optional: true,
 })
 
-/**
- * The browser origins allowed to call this API.
- *
- * Read through the `variables` service, **not** `process.env`. A deployed unit
- * is a Cloudflare Worker, where there is no `process.env` — reading it there
- * silently yields `undefined`, collapsing the allowlist to the two localhost
- * fallbacks and leaving production with no configured origin at all.
- *
- * This lives in `lib/` rather than beside the CORS middleware because a file
- * holding zod schemas may not also make wiring calls (PKU490): the CLI imports
- * schema files at runtime, and the wiring side-effects crash without a server.
- *
- * Shared with the analytics origin lock so the server-side check enforces
- * exactly the list CORS advertises; two lists would drift and disagree.
- */
 export async function allowedOrigins(variables: SingletonServices['variables']): Promise<string[]> {
   const configured = await variables.get('CORS_ORIGINS')
   if (configured) {

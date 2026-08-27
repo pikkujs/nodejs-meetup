@@ -15,12 +15,6 @@ export const FillsOutput = z.object({
   value: z.string(),
 })
 
-/**
- * Type a value into a form field.
- *
- * `fill` replaces the field's contents rather than appending, which is what "fills in the
- * form" means and what lets a scenario correct a field it already touched.
- */
 export const fills = pikkuScenarioStep({
   name: 'fills',
   description: 'types a value into a form field',

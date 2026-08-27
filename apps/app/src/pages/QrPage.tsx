@@ -4,13 +4,6 @@ import { asI18n, m } from '@/i18n/messages'
 import { useLocale } from '@/i18n/config'
 import { QrCode } from '@/components/QrCode'
 
-/**
- * The join code, in two sizes.
- *
- * `projected` is the wall: one code filling a 16:9 frame with nothing else on it.
- * Without it this is an ordinary page in the nav, sized like the rest of them, so
- * the organiser can hold the code up on a phone without leaving the shell.
- */
 export const QrPage: FC<{ projected?: boolean }> = ({ projected }) => {
   useLocale()
   const joinUrl = typeof window === 'undefined' ? '' : `${window.location.origin}/app`
@@ -33,8 +26,6 @@ export const QrPage: FC<{ projected?: boolean }> = ({ projected }) => {
             {m.qr__title()}
           </Text>
 
-          {/* Sized off the viewport's SHORT edge: a projector is 16:9 and a code
-              sized in `vw` would run off the bottom. */}
           <QrCode value={joinUrl} size="min(52vh, 52vw)" label={m.qr__title()} />
 
           <Text c="dimmed" style={{ fontSize: '1.8vw' }}>

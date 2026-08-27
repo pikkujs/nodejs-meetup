@@ -1,17 +1,5 @@
 import { pikkuScenario } from '#pikku/scenarios'
 
-/**
- * Milestone 05 — knowledge/milestones/05-the-organiser-runs-the-night.md.
- *
- *   Given talk one is the current slot
- *   When 'sam' advances the schedule with the passcode
- *   Then the short break is the current slot
- *   And the room's schedule shows the break as Now
- *
- * The last line is why this reads the schedule back as PRIYA. Sam advancing and Sam
- * seeing the result proves a round trip to himself; the thing that matters is that
- * forty other phones moved with him.
- */
 export const theOrganiserAdvancesTheEveningScenario = pikkuScenario<void, { nowOn: string }>({
   title: 'The organiser advances the evening',
   description: 'Advancing the schedule moves what the whole room sees',
@@ -25,9 +13,6 @@ export const theOrganiserAdvancesTheEveningScenario = pikkuScenario<void, { nowO
       slotId: 'slot-talk-1',
     })
 
-    // The unlock is a step of its own because it is a real one: nobody advances the
-    // evening without first getting past this screen, and it is the only call that
-    // exists purely to answer "is this the passcode?".
     await scenario.given(
       'unlocks the console with the passcode',
       'theOrganiserActs',

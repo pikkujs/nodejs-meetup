@@ -12,19 +12,6 @@ export const CheckOrganiserPasscodeOutput = z.object({
   nextTalk: TalkSchema.nullable(),
 })
 
-/**
- * "Is this the passcode?" — asked once, on the passcode screen, before anybody
- * presses Next in front of a room.
- *
- * It carries the SAME permission as the actions it precedes, which is the whole
- * point: it is not a separate, weaker check that a screen then trusts. A wrong
- * passcode is refused here by exactly the mechanism that would refuse
- * `advanceSchedule`, so the two can never disagree.
- *
- * It returns the current and next slot rather than a bare `{ ok: true }` so that
- * unlocking the organiser screen is one round trip instead of two — the passcode
- * is typed in a dark room with a talk already running.
- */
 export const checkOrganiserPasscode = pikkuSessionlessFunc({
   expose: true,
   readonly: true,

@@ -3,24 +3,11 @@ import { pikkuSessionlessFunc } from '#pikku/function'
 import { TalkJob } from './shared.js'
 
 export const SendTalkSummaryEmailOutput = z.object({
-  /** False when nothing was sent, with `reason` saying which of the two skips it was. */
   sent: z.boolean(),
   questionCount: z.number().int(),
   reason: z.string().optional(),
 })
 
-/**
- * Email the host what the room asked during one talk.
- *
- * `includeAnswered: true`, unlike the board: the board is a queue of what is
- * still owed and hides what the host got through, but this is a record of the
- * night, and a question that was answered out loud is the best kind of question
- * to have received. They are marked in the email rather than dropped.
- *
- * A missing ORGANISER_EMAIL returns `sent: false` rather than throwing. This is
- * a queue worker: throwing means retry, and no amount of retrying will make an
- * unconfigured address appear.
- */
 export const sendTalkSummaryEmail = pikkuSessionlessFunc({
   auth: false,
   description: 'Email the organiser the questions one talk drew, most-wanted first.',
@@ -43,10 +30,6 @@ export const sendTalkSummaryEmail = pikkuSessionlessFunc({
       return { sent: false, questionCount: 0, reason: 'unknown-talk' }
     }
 
-    // Built as a named const rather than inline, because the generated template
-    // variable map lists `#each questions` (the block opener) and not
-    // `questions`, so an object LITERAL trips excess-property checking on the
-    // very key the template iterates. A named object is not fresh and passes.
     const data = {
       talkTitle: talk.title,
       questionCount: questions.length,

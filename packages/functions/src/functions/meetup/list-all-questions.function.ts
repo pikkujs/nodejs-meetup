@@ -2,9 +2,7 @@ import { z } from 'zod'
 import { pikkuSessionlessFunc } from '#pikku/function'
 
 export const ListAllQuestionsInput = z.object({
-  /** Restrict to one slot. Omitted means the whole night. */
   talkId: z.string().optional(),
-  /** Answered questions are excluded by default — the board's view of "open". */
   includeAnswered: z.boolean().optional(),
 })
 
@@ -28,15 +26,6 @@ export const ListAllQuestionsOutput = z.object({
   total: z.number().int(),
 })
 
-/**
- * Every question the night has collected, grouped by talk.
- *
- * `listQuestions` answers "what is on the board", which is scoped to the current
- * talk and hides anything answered. That is right for a phone and wrong for
- * anything summarising the evening, which is what this exists for: the agent's
- * read tool and the talk-summary email both need the questions a talk actually
- * drew, including the ones the host got through.
- */
 export const listAllQuestions = pikkuSessionlessFunc({
   expose: true,
   mcp: true,
@@ -85,8 +74,6 @@ export const listAllQuestions = pikkuSessionlessFunc({
 
     const rows = await query.execute()
 
-    // Grouped in one pass rather than a query per talk: the whole night is a few
-    // dozen rows, and an agent asking "what was asked" wants one round trip.
     const byTalk = new Map<string, ListAllQuestionsOutputTalk>()
     for (const row of rows) {
       let talk = byTalk.get(row.talkId)

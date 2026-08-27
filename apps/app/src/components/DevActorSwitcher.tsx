@@ -5,9 +5,6 @@ import { useMutation } from '@tanstack/react-query'
 import { devActors, signInAsActor } from '@/lib/auth'
 import { asI18n, m } from '@/i18n/messages'
 
-// Dev-only floating "Sign in as" switcher: one click signs in as any declared
-// scenario persona (no password), so you can view the app as each user kind.
-// Renders nothing in production or when the sandbox exposes no actors.
 export const DevActorSwitcher: FC = () => {
   const navigate = useNavigate()
   const actors = devActors()

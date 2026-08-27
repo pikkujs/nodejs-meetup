@@ -13,22 +13,9 @@ export const ClicksInput = z.object(ControlInput)
 
 export const ClicksOutput = z.object({
   testId: z.string(),
-  /** Where the click left the browser — a click that navigates says so in the run record. */
   pathname: z.string(),
 })
 
-/**
- * Click a control.
- *
- * `locate` filters to what is VISIBLE, which matters more than it sounds: Mantine's
- * responsive props (`hiddenFrom`/`visibleFrom`) are `display: none` rather than conditional
- * rendering, so a control that appears once on screen can match twice in the DOM. An
- * unfiltered match would be a strict-mode violation, and taking the first would wait out a
- * timeout on the copy that is switched off.
- *
- * A remaining ambiguity is reported rather than guessed at — picking one would make the
- * scenario pass while proving something other than what it claims.
- */
 export const clicks = pikkuScenarioStep({
   name: 'clicks',
   description: 'clicks a control by its testid',

@@ -13,21 +13,10 @@ export type StageQuestion = {
 
 export interface StageBoardProps {
   questions: StageQuestion[]
-  /** Questions past the top few — a count, because they will not fit on the wall. */
   remaining?: number
-  /** Pizza, the break, the doors: nothing on stage to ask about. */
   interlude?: boolean
 }
 
-/**
- * The ranked list as the room sees it, five metres back.
- *
- * Sized in `vw`/`vh` rather than px: the only thing that matters is the fraction
- * of the projection a line occupies, and the same page is thrown at a 3m screen
- * and a 55" TV. Split out of StagePage so the Design tab can show the states the
- * projector passes through — the wall is the one surface nobody can re-render on
- * request during a talk.
- */
 export const StageBoard: FC<StageBoardProps> = ({
   questions,
   remaining = 0,
@@ -60,8 +49,6 @@ export const StageBoard: FC<StageBoardProps> = ({
               align="flex-start"
               gap="2vw"
             >
-              {/* Rank, not vote count, at this size: from five metres the useful
-                  fact is which one the host reads first. */}
               <Text
                 ff="monospace"
                 fw={700}
@@ -74,8 +61,6 @@ export const StageBoard: FC<StageBoardProps> = ({
                 <Text fw={600} lh={1.25} style={{ fontSize: '2.6vw' }}>
                   {asI18n(question.body)}
                 </Text>
-                {/* The name is static; only the count moves. Splitting them lets
-                    the number roll without the name flickering beside it. */}
                 <Group gap="0.5vw" align="baseline" style={{ fontSize: '1.3vw' }}>
                   <Text c="dimmed" ff="monospace" style={{ fontSize: '1.3vw' }}>
                     {asI18n(`${question.authorName} ·`)}

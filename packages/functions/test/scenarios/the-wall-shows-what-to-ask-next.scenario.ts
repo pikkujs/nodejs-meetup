@@ -5,21 +5,6 @@ const WORKERS = 'When is a worker thread worth the overhead?'
 const PRIYA_DEVICE = 'scenario-device-priya-stage'
 const MARCO_DEVICE = 'scenario-device-marco-stage'
 
-/**
- * Milestone 06 — knowledge/milestones/06-the-big-screen.md.
- *
- *   Given talk one is the current slot
- *   And 'priya' has asked about backpressure
- *   And 'marco' has asked about worker threads and upvoted the backpressure one
- *   When the stage view is projected
- *   Then the backpressure question is first on the wall
- *   And the current talk's title is on the wall
- *
- * The wall is read through `getStageView` — the single call the projector makes — so
- * this proves the thing the room sees rather than reassembling it from the board. The
- * three-question cap is asserted inside the step, because a fourth question appearing
- * on a projection is a design failure that no amount of correct data prevents.
- */
 export const theWallShowsWhatToAskNextScenario = pikkuScenario<
   void,
   { talkTitle: string; shown: number }

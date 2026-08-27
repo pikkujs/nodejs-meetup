@@ -2,11 +2,8 @@ import { z } from 'zod'
 import { pikkuScenarioStep } from '#pikku/scenarios'
 
 export const TheWallShowsInput = z.object({
-  /** The talk whose name should be at the top of the projection. */
   talkTitle: z.string(),
-  /** The question expected first on the wall, matched as a substring. */
   topQuestion: z.string().optional(),
-  /** How many questions the wall may show at once. Three, always. */
   atMost: z.number().int().default(3),
 })
 
@@ -16,14 +13,6 @@ export const TheWallShowsOutput = z.object({
   remaining: z.number().int(),
 })
 
-/**
- * Assert what the projector is showing.
- *
- * A separate step from `theBoardReads` because they are separate claims: the board is
- * every question in vote order, the wall is the top three of them plus a count of what
- * is behind. The gap between "the board says" and "the wall says" is exactly the bug
- * the room would notice and nobody else would.
- */
 export const theWallShows = pikkuScenarioStep({
   name: 'theWallShows',
   actor: true,

@@ -2,13 +2,9 @@ import { z } from 'zod'
 import { pikkuScenarioStep } from '#pikku/scenarios'
 
 export const TheBoardReadsInput = z.object({
-  /** The question expected at position one, matched as a substring. */
   top: z.string().optional(),
-  /** Text that must NOT be on the board — an answered question, mostly. */
   absent: z.string().optional(),
-  /** How many questions the board should be holding. */
   count: z.number().int().optional(),
-  /** Read as this device, so `youVoted` reflects the right person. */
   attendeeId: z.string().optional(),
 })
 
@@ -18,17 +14,6 @@ export const TheBoardReadsOutput = z.object({
   topVotes: z.number().int(),
 })
 
-/**
- * Read the Q&A board as a person and assert what is on it.
- *
- * An ACTOR step over the real transport rather than a database query, because the
- * ordering under test — votes desc, then oldest first — lives in the function, not in
- * the table. A step that read the rows directly would pass with the sort deleted.
- *
- * Every assertion is optional and they compose: one step call can say "the
- * backpressure question is top, the answered one is gone, and there are two left",
- * which is one sentence in the milestone's gherkin too.
- */
 export const theBoardReads = pikkuScenarioStep({
   name: 'theBoardReads',
   actor: true,

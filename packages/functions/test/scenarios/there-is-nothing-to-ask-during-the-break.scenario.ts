@@ -1,17 +1,5 @@
 import { pikkuScenario } from '#pikku/scenarios'
 
-/**
- * Milestone 02, second scenario.
- *
- *   Given the break is the current slot
- *   When 'marco' opens the Q&A board
- *   Then he is told what is happening instead of being offered a composer
- *
- * The interesting half is the ABSENCE. A composer that posts into an interlude has to
- * be refused by the server, and a refusal after typing is a worse experience than not
- * being offered the box — so the board removes the composer and says why, and this
- * asserts both halves rather than trusting the first.
- */
 export const thereIsNothingToAskDuringTheBreakScenario = pikkuScenario<void, { slot: string }>({
   title: 'There is nothing to ask during the break',
   description: 'An interlude closes the composer and says so',

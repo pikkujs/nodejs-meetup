@@ -5,9 +5,6 @@ import { asI18n } from '@pikku/react'
 import { m } from '@/i18n/messages'
 import { useLocale } from '@/i18n/config'
 
-// Router-level error boundary (wired as the router's defaultErrorComponent). In
-// dev it reveals the raw error in an expandable section — agents watch for this
-// while iterating — while production stays a calm, generic message.
 export function DefaultErrorPage({ error }: { error: unknown }) {
   useLocale()
   const [open, setOpen] = useState(false)

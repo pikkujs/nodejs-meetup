@@ -2,7 +2,6 @@ import { z } from 'zod'
 import { pikkuScenarioStep } from '#pikku/scenarios'
 
 export const TheRoomIsOnInput = z.object({
-  /** The slot the room should believe is live, by id. */
   slotId: z.string(),
 })
 
@@ -11,14 +10,6 @@ export const TheRoomIsOnOutput = z.object({
   title: z.string(),
 })
 
-/**
- * Assert what the ROOM thinks is happening, from the schedule everyone reads.
- *
- * Not a database check on `event_state`, and not a re-read of the organiser's own
- * response: the claim under test is that advancing the schedule changes what forty
- * phones show. Reading it back through `listSchedule` as an attendee is the only way
- * to prove that, and it is one join away from being wrong.
- */
 export const theRoomIsOn = pikkuScenarioStep({
   name: 'theRoomIsOn',
   actor: true,

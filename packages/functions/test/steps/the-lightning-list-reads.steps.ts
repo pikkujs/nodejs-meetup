@@ -2,15 +2,10 @@ import { z } from 'zod'
 import { pikkuScenarioStep } from '#pikku/scenarios'
 
 export const TheLightningListReadsInput = z.object({
-  /** A name expected on the list. */
   name: z.string(),
-  /** Where it should sit, 1-based. Omit to assert presence without order. */
   position: z.number().int().optional(),
-  /** Read as this device, so `isYours` reflects the right person. */
   attendeeId: z.string().optional(),
-  /** Whether this reader should be told the row is theirs to withdraw. */
   isYours: z.boolean().optional(),
-  /** False to assert the name is NOT on the list — what a withdrawal means. */
   present: z.boolean().default(true),
 })
 
@@ -19,15 +14,6 @@ export const TheLightningListReadsOutput = z.object({
   position: z.number().int(),
 })
 
-/**
- * Assert who is on the lightning list, in what order, and whose row is whose.
- *
- * `isYours` is the interesting assertion, not the ordering: it is the whole of the
- * ownership model — the list is public, and the only thing that makes a row yours is
- * that you sent the device id that created it. Reading the list as somebody else and
- * finding `isYours: false` is what "you can only withdraw your own" means before any
- * button exists.
- */
 export const theLightningListReads = pikkuScenarioStep({
   name: 'theLightningListReads',
   actor: true,

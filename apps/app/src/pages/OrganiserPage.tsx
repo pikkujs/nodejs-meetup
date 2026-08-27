@@ -18,27 +18,16 @@ import { asI18n, m } from '@/i18n/messages'
 import { useLocale } from '@/i18n/config'
 import { LIVE, live } from '@/lib/live'
 
-/**
- * The passcode is held in `sessionStorage`, not `localStorage`: the organiser
- * refreshes this page during the evening and should not be locked out mid-talk, but
- * a phone that has been handed round afterwards should not still be unlocked.
- *
- * This is a convenience, not a gate. Nothing on this screen trusts it — every action
- * sends the passcode and the FUNCTION decides, so pasting a value into storage by
- * hand buys you a screen whose buttons all fail.
- */
 const PASSCODE_KEY = 'meetup-organiser-passcode'
 
 const readStoredPasscode = () => {
   try {
     return sessionStorage.getItem(PASSCODE_KEY) ?? ''
   } catch {
-    // Safari private mode throws on sessionStorage. Typing it again is fine.
     return ''
   }
 }
 
-/** The passcode screen — one field, in a dark room, with a talk already running. */
 const Unlock: FC<{ onUnlocked: (passcode: string) => void }> = ({ onUnlocked }) => {
   useLocale()
   const [draft, setDraft] = useState('')
@@ -83,7 +72,6 @@ const Unlock: FC<{ onUnlocked: (passcode: string) => void }> = ({ onUnlocked }) 
   )
 }
 
-/** Everything the passcode buys: the running order, and the board. */
 const Console: FC<{ passcode: string; onLock: () => void }> = ({ passcode, onLock }) => {
   useLocale()
   const queryClient = useQueryClient()
@@ -100,9 +88,6 @@ const Console: FC<{ passcode: string; onLock: () => void }> = ({ passcode, onLoc
   const advance = usePikkuMutation('advanceSchedule', { onSuccess: refresh })
   const markAnswered = usePikkuMutation('markQuestionAnswered', { onSuccess: refresh })
 
-  // A passcode that stopped working (rotated between talks, or pasted in by hand)
-  // must not leave them on a console whose every button fails: drop straight back to
-  // the passcode field, which is the only thing that can fix it.
   useEffect(() => {
     if (where.isError) onLock()
   }, [where.isError, onLock])
@@ -118,8 +103,6 @@ const Console: FC<{ passcode: string; onLock: () => void }> = ({ passcode, onLoc
           {m.organiser__title()}
         </Title>
         <Group gap="xs">
-          {/* Plain anchor, not a router Link: the projector screen belongs in a
-              second window on the second display, not in this tab. */}
           <Button component="a" href="/app/stage" target="_blank" variant="light" size="xs">
             {m.organiser__open_stage()}
           </Button>
@@ -163,8 +146,6 @@ const Console: FC<{ passcode: string; onLock: () => void }> = ({ passcode, onLoc
             )}
           </Box>
 
-          {/* The single irreversible-looking action of the evening, so it is large,
-              alone, and says what it will do rather than "Next". */}
           <Button
             size="md"
             disabled={!next}
@@ -232,36 +213,22 @@ const Console: FC<{ passcode: string; onLock: () => void }> = ({ passcode, onLoc
   )
 }
 
-/**
- * The organiser screen — milestone 05.
- *
- * Two states in one route rather than two routes, because the URL is read out loud
- * ("go to /app/organiser") and a redirect to a login path would be one more thing to
- * explain in a dark room.
- */
 export const OrganiserPage: FC = () => {
   const [passcode, setPasscode] = useState('')
 
-  // From storage after mount, never during render: this route is client-only, but
-  // reading storage in a render body is the kind of thing that survives until
-  // somebody turns SSR back on.
   useEffect(() => setPasscode(readStoredPasscode()), [])
 
   const unlock = (value: string) => {
     try {
       sessionStorage.setItem(PASSCODE_KEY, value)
-    } catch {
-      // Unlocked for this render either way; they just retype it after a refresh.
-    }
+    } catch {}
     setPasscode(value)
   }
 
   const lock = () => {
     try {
       sessionStorage.removeItem(PASSCODE_KEY)
-    } catch {
-      // Nothing stored, nothing to clear.
-    }
+    } catch {}
     setPasscode('')
   }
 

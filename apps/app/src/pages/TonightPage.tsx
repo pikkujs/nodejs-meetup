@@ -24,13 +24,6 @@ function useSchedule() {
   return { ...query, slots: query.data?.slots ?? [] }
 }
 
-/**
- * One row of the running order.
- *
- * The current slot is not a variant of this — it is the card above, at a different
- * size. A room glancing at a phone for two seconds needs the answer to "what is on
- * now" to be the biggest thing on the screen, not a highlighted row in a list.
- */
 const SlotRow: FC<{ slot: Slot; dim?: boolean }> = ({ slot, dim }) => (
   <Group wrap="nowrap" align="baseline" gap="md" py={6} opacity={dim ? 0.55 : 1}>
     <Text ff="monospace" fz="sm" c="dimmed" w={48} style={{ flex: 'none' }}>
@@ -49,10 +42,6 @@ const SlotRow: FC<{ slot: Slot; dim?: boolean }> = ({ slot, dim }) => (
   </Group>
 )
 
-/**
- * Tonight — milestone 01. The first thing anyone opens, usually mid-talk, to work
- * out what they walked into.
- */
 export const TonightPage: FC = () => {
   useLocale()
   const { slots, isPending, isError } = useSchedule()
@@ -82,8 +71,6 @@ export const TonightPage: FC = () => {
         <Card
           withBorder
           padding="lg"
-          // The green rail carries the same meaning as the word "Now" beside it,
-          // never instead of it — knowledge/decisions/design/two-viewing-distances.md.
           style={{ borderLeft: '3px solid var(--mantine-primary-color-filled)' }}
         >
           <Stack gap="xs">
@@ -105,7 +92,6 @@ export const TonightPage: FC = () => {
               </Text>
             ) : null}
 
-            {/* Only a talk takes questions; during pizza this would be a dead end. */}
             {current.kind === 'talk' ? (
               <Button component={Link} to="/app/questions" mt="sm" variant="light">
                 {m.tonight__ask_cta()}

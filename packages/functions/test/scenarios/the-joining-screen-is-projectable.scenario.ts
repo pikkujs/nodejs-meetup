@@ -1,20 +1,6 @@
 import { pikkuScenario } from '#pikku/scenarios'
 import { copy } from '../lib/copy.js'
 
-/**
- * Milestone 07 — knowledge/milestones/07-the-room-scans-in.md.
- *
- *   When the QR screen is projected
- *   Then the room sees the address to open and a code to scan
- *
- * Through a browser, because the whole artifact is rendered client-side: the code is
- * drawn from `window.location`, so there is no API response that could stand in for
- * this and no server-side answer that would prove anything.
- *
- * The address in text beside the code is not redundancy for its own sake — a phone
- * whose camera will not focus in a dark room still has to be able to join, and
- * somebody will always ask what the URL is.
- */
 export const theJoiningScreenIsProjectableScenario = pikkuScenario<void, { path: string }>({
   title: 'The joining screen is projectable',
   description: 'The QR screen shows a scannable code and the address in words',

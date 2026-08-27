@@ -14,18 +14,6 @@ import { theJoiningScreenIsProjectableScenario } from '../scenarios/the-joining-
 import { theEveningRunsItselfScenario } from '../scenarios/the-evening-runs-itself.scenario.js'
 import { theAssistantAnswersFromTheRoomScenario } from '../scenarios/the-assistant-answers-from-the-room.scenario.js'
 
-/**
- * One scenario per gherkin block in knowledge/milestones/, in milestone order.
- *
- * Deliberately NOT tagged `smoke`: every one of these mutates — it moves the current
- * slot, clears a board, signs somebody up. The smoke gate has to stay safe to run
- * against a server the room is using.
- *
- * Order is not incidental. `theOrganiserAdvancesTheEveningScenario` leaves the evening
- * on the break, and every scenario that cares opens by putting it back
- * (`theCurrentSlotIs`), so the suite is re-runnable and order-independent in practice —
- * but a scenario added here without that Given will be the one that breaks.
- */
 export const meetupFeature = pikkuFeature({
   name: 'Running the meetup',
   description: "Every milestone's gherkin, as a scenario",
@@ -43,12 +31,7 @@ export const meetupFeature = pikkuFeature({
     theOrganiserUnlocksAndRunsTheNightScenario,
     theWallShowsWhatToAskNextScenario,
     theJoiningScreenIsProjectableScenario,
-    // Excluded from the default suite by its `ai-live` tag: it costs two model
-    // calls. It still belongs here so `pikku scenario run --tags ai-live` finds it
-    // alongside the rest of the night rather than in a suite of its own.
     theAssistantAnswersFromTheRoomScenario,
-    // Last on purpose — it runs the evening to the end and the workflow is still
-    // moving for a moment after. See the note in the scenario.
     theEveningRunsItselfScenario,
   ],
 })

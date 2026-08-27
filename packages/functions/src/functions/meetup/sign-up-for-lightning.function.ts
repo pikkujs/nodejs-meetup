@@ -12,19 +12,9 @@ export const SignUpForLightningInput = z.object({
 
 export const SignUpForLightningOutput = z.object({
   id: z.string(),
-  /** Where they are in the running order, 1-based, as it stands right now. */
   position: z.number().int(),
 })
 
-/**
- * Put your name down for a lightning talk.
- *
- * Ungated on purpose. A lightning list that needs approving is a lineup, and a
- * lineup is a different product — knowledge/entities/lightning-slot.md.
- *
- * One slot per device, enforced by the unique constraint on `attendee_id`. The cap
- * is not a rule about fairness; it is what makes "withdraw your own" unambiguous.
- */
 export const signUpForLightning = pikkuSessionlessFunc({
   expose: true,
   auth: false,
@@ -55,9 +45,6 @@ export const signUpForLightning = pikkuSessionlessFunc({
       .select(({ fn }) => fn.count<number>('id').as('position'))
       .executeTakeFirstOrThrow()
 
-    // No payload: the list is short, ordering is positional, and a refetch of
-    // ten rows costs less than keeping a second copy of the ordering rule in the
-    // browser and getting it subtly different from the server's.
     await publishLive(eventHub, { kind: 'lightning-changed' }, logger)
 
     return { id, position: Number(position) }

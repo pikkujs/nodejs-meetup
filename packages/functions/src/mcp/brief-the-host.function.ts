@@ -3,11 +3,6 @@ import { pikkuMCPPromptFunc } from '#pikku/mcp'
 
 export const BriefTheHostInput = z.object({})
 
-/**
- * The prompt the host would otherwise have to write at 19:20 with a microphone in
- * one hand, so it ships the questions inline rather than asking the assistant to
- * go and fetch them.
- */
 export const briefTheHostPrompt = pikkuMCPPromptFunc({
   input: BriefTheHostInput,
   func: async (_services, _input, { rpc }) => {

@@ -23,13 +23,6 @@ import { NamePrompt } from '@/components/NamePrompt'
 const MIN_TOPIC = 3
 const MAX_TOPIC = 80
 
-/**
- * The lightning list — milestone 04.
- *
- * A list anyone may add themselves to and only remove themselves from. The device
- * id does both jobs: it is what makes a row yours, and it is the only thing that
- * lets you take it back. Nobody can bump anybody.
- */
 export const LightningPage: FC = () => {
   useLocale()
   const queryClient = useQueryClient()
@@ -136,7 +129,6 @@ export const LightningPage: FC = () => {
       <Stack gap={0}>
         {slots.map((slot, index) => (
           <Group key={slot.id} wrap="nowrap" align="flex-start" gap="md" py="sm">
-            {/* Sign-up order is the running order, so the number is the promise. */}
             <Text ff="monospace" fz="sm" c="dimmed" w={32} style={{ flex: 'none' }}>
               {m.lightning__position({ position: index + 1 })}
             </Text>

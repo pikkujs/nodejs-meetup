@@ -19,16 +19,6 @@ import { MoonGlyph, SunGlyph } from '../ColorSchemeToggle'
 import { AccountGlyph, CheckGlyph, SelectorGlyph, SignOutGlyph } from './nav'
 import { usePhone } from './mobileLayout'
 
-/**
- * The identity row at the foot of the sidebar and inside the phone's More sheet.
- *
- * There is no session here and no request to make: the name comes off this device
- * (knowledge/decisions/security/nobody-signs-in.md), so this renders instantly and
- * never shows a skeleton. "Change your name" and "Forget my name" are the whole of
- * account management — theme, colour scheme and language hang off the same menu.
- *
- * @param orientation - `horizontal` for a header bar with one row to spend.
- */
 export const ShellSettings: FC<{ orientation?: 'vertical' | 'horizontal' }> = ({
   orientation = 'vertical',
 }) => {
@@ -131,7 +121,6 @@ export const ShellSettings: FC<{ orientation?: 'vertical' | 'horizontal' }> = ({
             </>
           ) : null}
 
-          {/* Only offered once there is something to forget. */}
           {name ? (
             <>
               <Menu.Divider />

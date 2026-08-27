@@ -14,20 +14,6 @@ export const UpvoteQuestionOutput = z.object({
   votes: z.number().int(),
 })
 
-/**
- * Put your hand up for someone else's question.
- *
- * A second vote from the same device is REFUSED, not quietly ignored. Silently
- * succeeding would leave the phone showing a cast vote and a count that did not
- * move, which reads as a broken app; a refusal lets the client say "you already
- * voted for this" and be right.
- *
- * There is no un-vote — knowledge/decisions/design/the-board-is-a-queue.md.
- *
- * The uniqueness is the primary key's, not a read-then-write's: two phones
- * tapping the same row in the same tick both pass a `SELECT`, and only one can
- * pass the insert.
- */
 export const upvoteQuestion = pikkuSessionlessFunc({
   expose: true,
   auth: false,
@@ -44,8 +30,6 @@ export const upvoteQuestion = pikkuSessionlessFunc({
     if (!question) {
       throw new NotFoundError('That question is not on the board.')
     }
-    // Answered questions leave the board, so voting on one means the phone is
-    // holding a board from before the host got to it.
     if (question.answeredAt) {
       throw new ConflictError('That question has already been answered.')
     }
@@ -66,10 +50,6 @@ export const upvoteQuestion = pikkuSessionlessFunc({
       .where('questionId', '=', questionId)
       .executeTakeFirstOrThrow()
 
-    // The authoritative count, straight from the row that was just written, so
-    // every board applies the same number instead of each computing its own from
-    // a local increment. Two votes in the same second therefore converge rather
-    // than racing to different totals.
     await publishLive(
       eventHub,
       { kind: 'question-upvoted', talkId: question.talkId, questionId, votes: Number(votes) },

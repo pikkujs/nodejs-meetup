@@ -2,21 +2,6 @@ import { Drawer, rem } from '@pikku/mantine/core'
 import type { ReactNode } from 'react'
 import { TAB_BAR_FOOT } from './mobileLayout'
 
-/**
- * The bottom sheet every foot-bar tab opens. It rises from BEHIND the bar, which
- * keeps its own layer above the sheet's, so the bar stays lit and tappable and the
- * body's bottom padding is what clears the overlap.
- *
- * Transform only: Mantine's `slide-up` fades opacity alongside the translate, which
- * reads as materialising rather than sliding. The `inner` alignment is load-bearing —
- * Mantine stretches the drawer viewport across the cross axis, so `size="auto"`
- * alone still renders a full-height sheet.
- *
- * @param fill - Fill the screen above the bar, for a surface you work in rather than
- * pick from.
- * @param keepMounted - Keep content mounted while shut, so anything portalling into
- * the sheet has a target before the first open.
- */
 export function MobileSheet({
   opened,
   onClose,

@@ -4,9 +4,6 @@ import { useLocale } from '@/i18n/config'
 import { themeList } from '@project/mantine-themes'
 import { usePreferences } from '@/contexts/preferences'
 
-// A single theme per app. Themes are normally chosen from the Fabric console
-// (which live-injects into the iframe); this picker only appears when more than
-// one theme ships, and is hidden otherwise.
 export function ThemeSelector() {
   useLocale()
   const { themeId, setThemeId } = usePreferences()

@@ -1,20 +1,6 @@
 import { pikkuAgent } from '#pikku/agent/pikku-agent-types.gen.js'
 import { ref } from '#pikku/function'
 
-/**
- * The host's assistant, on stage.
- *
- * It reads the night and it can put a question on the board, which is the only
- * write it is given. Everything it can reach is a function the room could already
- * call from a phone — there is no agent-only path into the database — so the
- * worst it can do is ask a bad question, which is also the worst an attendee can
- * do. See knowledge/decisions/security/nobody-signs-in.md for why that is the
- * right level of trust here.
- *
- * `askQuestion` takes an `attendeeId`, and the agent is handed one that is
- * plainly not a person (`agent:<something>`), so a question it posts is
- * attributable and cannot silently borrow somebody's vote allowance.
- */
 export const meetupHost = pikkuAgent({
   name: 'meetup-host',
   description:

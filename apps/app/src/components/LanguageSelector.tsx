@@ -15,9 +15,6 @@ export function LanguageSelector() {
   useLocale()
   const { locale, setLocale } = usePreferences()
 
-  // A single-locale app has nothing to switch — showing a dead dropdown that
-  // "does nothing" reads as broken. Only render once a second locale exists
-  // (added via `fabric i18n --add-locale`, which registers it in settings.json).
   if (supportedLocales.length <= 1) return null
 
   const data = supportedLocales.map((code) => ({

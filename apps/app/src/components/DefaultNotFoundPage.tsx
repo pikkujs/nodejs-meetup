@@ -4,13 +4,6 @@ import { Link } from '@tanstack/react-router'
 import { m } from '@/i18n/messages'
 import { useLocale } from '@/i18n/config'
 
-// Router-level not-found boundary (wired as the router's defaultNotFoundComponent
-// and as the root route's notFoundComponent). Deliberately the same layout as
-// DefaultErrorPage — the two are one page with different copy, and a user who
-// hits both in a session should recognise the second.
-//
-// No error detail section here: an unmatched URL has nothing to inspect, and
-// unlike a thrown error it is usually the user's typo rather than the app's bug.
 export function DefaultNotFoundPage() {
   useLocale()
 
@@ -46,9 +39,6 @@ export function DefaultNotFoundPage() {
           {m.notfound__hint()}
         </Text>
         <Group>
-          {/* Link, not navigate() in an onClick: a not-found page is a plausible
-              landing spot from a bad external link, and a real anchor keeps it
-              usable (and crawlable) before hydration. */}
           <Button component={Link} to="/" variant="light">
             {m.notfound__home()}
           </Button>

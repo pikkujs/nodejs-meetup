@@ -1,19 +1,6 @@
 import { pikkuScenario } from '#pikku/scenarios'
 import { copy } from '../lib/copy.js'
 
-/**
- * Milestone 01 — knowledge/milestones/01-tonights-schedule.md.
- *
- *   Given tonight's running order is seeded from doors to doors
- *   When 'priya' opens the meetup app
- *   Then she sees the current slot marked Now above the rest of the evening
- *   And she sees every later slot with its time
- *
- * Driven through a browser rather than over the API, because the claim is about what
- * a person standing in the room SEES. `listSchedule` returning the right rows and the
- * page pinning the current one to the top are different facts, and this milestone is
- * the second one.
- */
 export const theRoomSeesWhatIsOnNowScenario = pikkuScenario<void, { path: string }>({
   title: 'The room sees what is on now',
   description: 'The schedule pins the current slot above the rest of the evening',
@@ -36,8 +23,6 @@ export const theRoomSeesWhatIsOnNowScenario = pikkuScenario<void, { path: string
       },
     )
 
-    // The word and the title together: the badge alone appears on any slot, and the
-    // title alone appears whether or not it is pinned.
     await scenario.then(
       'sees the evening is on talk one',
       'seesText',
@@ -52,8 +37,6 @@ export const theRoomSeesWhatIsOnNowScenario = pikkuScenario<void, { path: string
       { text: 'Vibe coding is the easy part' },
       { actor: actors.priya },
     )
-    // A later slot, with its time — proof the rest of the evening is on the page and
-    // not just the one card.
     await scenario.then(
       'sees a later slot with its time',
       'seesText',

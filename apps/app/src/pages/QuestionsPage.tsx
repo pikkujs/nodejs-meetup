@@ -12,14 +12,6 @@ import { QuestionBoard } from '@/components/QuestionBoard'
 const MIN_BODY = 3
 const MAX_BODY = 280
 
-/**
- * The Q&A board — milestones 02 and 03.
- *
- * The talk is never an input to anything here. The board asks the server what is on
- * stage and posts to whatever that is, so a question typed thirty seconds before the
- * organiser advances lands on the talk it was asked about, and nobody can aim a
- * question at a slot that finished an hour ago.
- */
 export const QuestionsPage: FC = () => {
   useLocale()
   const queryClient = useQueryClient()
@@ -47,11 +39,6 @@ export const QuestionsPage: FC = () => {
   const tooLong = trimmed.length > MAX_BODY
   const postable = trimmed.length >= MIN_BODY && !tooLong
 
-  /**
-   * One control, two outcomes: with a name it posts, without one it asks for the
-   * name and posts on the way back. The question they already typed is never lost
-   * to the detour.
-   */
   const post = (postAs?: string) => {
     const author = postAs ?? name
     if (!postable) return
@@ -64,7 +51,6 @@ export const QuestionsPage: FC = () => {
 
   const currentTalk = board.data?.currentTalk
   const questions = board.data?.questions ?? []
-  // An interlude — pizza, the break, doors — has no speaker to ask.
   const closed = currentTalk?.kind === 'interlude'
 
   return (

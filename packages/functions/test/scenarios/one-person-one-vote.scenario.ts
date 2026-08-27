@@ -3,19 +3,6 @@ import { pikkuScenario } from '#pikku/scenarios'
 const BACKPRESSURE = 'How do streams handle backpressure?'
 const MARCO_DEVICE = 'scenario-device-marco-repeat'
 
-/**
- * Milestone 03, second scenario.
- *
- *   Given 'marco' has upvoted the backpressure question
- *   When he tries to upvote it a second time
- *   Then he is refused
- *   And the question still has one vote
- *
- * Worth its own scenario because the device id is a CLAIM, not a credential
- * (knowledge/decisions/security/nobody-signs-in.md) — the honest defence against
- * ballot-stuffing is a primary key, and this is the test that the primary key is
- * actually doing that job rather than the UI hiding the button.
- */
 export const onePersonOneVoteScenario = pikkuScenario<void, { votes: number }>({
   title: 'One person, one vote',
   description: 'A second vote from the same device is refused and changes nothing',

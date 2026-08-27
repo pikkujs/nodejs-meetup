@@ -10,7 +10,6 @@ import { ShellSettings } from './ShellSettings'
 import { TAB_BAR_HEIGHT, usePhone } from './mobileLayout'
 import { MoreGlyph, NavList, useActiveNavPath, type NavItem } from './nav'
 
-/** Five is the platform limit and the fifth slot keeps labels legible at 320px. */
 const MAX_TABS = 4
 
 export interface MobileTab {
@@ -19,7 +18,6 @@ export interface MobileTab {
   label: I18nString
   active?: boolean
   onClick: () => void
-  /** How the bar puts this surface away when another tab is tapped. */
   close?: () => void
 }
 
@@ -51,15 +49,6 @@ const TabLabel: FC<{ children: I18nString }> = ({ children }) => (
   </Text>
 )
 
-/**
- * The phone's foot bar. Mount it once in the AppShell; it hides itself above 48em.
- *
- * Destinations get what's left of `MAX_TABS` after More and any `extraTabs`, and the
- * rest overflow into the More sheet — so adding screens can never break the layout.
- * The bar owns mutual exclusion between surfaces, since only it can see all of them.
- *
- * @param extraTabs - Slots for surfaces a scaffold adds later (page options, search).
- */
 export const MobileTabBar: FC<{
   items: NavItem[]
   extraTabs?: MobileTab[]
@@ -83,7 +72,6 @@ export const MobileTabBar: FC<{
 
   return (
     <>
-      {/* `hiddenFrom`, not `usePhone`, so the server-rendered HTML is already correct. */}
       <Box
         component="nav"
         hiddenFrom="sm"
@@ -92,8 +80,6 @@ export const MobileTabBar: FC<{
           position: 'fixed',
           insetInline: 0,
           bottom: 0,
-          // Over the page, under Mantine's modal layer (200), so a sheet renders
-          // above the bar's siblings while the bar stays tappable beside it.
           zIndex: 190,
           display: 'flex',
           alignItems: 'stretch',
@@ -123,7 +109,6 @@ export const MobileTabBar: FC<{
         {extraTabs?.map(({ key, icon, label, active, onClick }) => (
           <UnstyledButton
             key={key}
-            // aria-pressed, not aria-current: these toggle a surface, not a location.
             aria-pressed={active}
             onClick={() => {
               setMoreOpen(false)

@@ -1,19 +1,6 @@
 import { pikkuScenario } from '#pikku/scenarios'
 import { copy } from '../lib/copy.js'
 
-/**
- * Milestone 05, through the screen the organiser actually uses.
- *
- * The API scenarios beside this one prove the rules; this proves the console — that a
- * passcode typed into a field unlocks a working screen, and that the two big controls
- * on it do what their labels say.
- *
- * Sam types the passcode as a literal, and it is the WRONG one first. The real
- * passcode never appears in this file: after the refusal, the run reads it from the
- * environment through `theOrganiserActs`, exactly as every other organiser scenario
- * does. What is asserted here is the shape of the screen either side of the lock —
- * which is the part a passcode-in-a-test-file would have bought nothing extra of.
- */
 export const theOrganiserUnlocksAndRunsTheNightScenario = pikkuScenario<void, { path: string }>({
   title: 'The organiser console refuses a wrong passcode',
   description: 'The passcode screen stands between the room and the schedule',
@@ -40,7 +27,6 @@ export const theOrganiserUnlocksAndRunsTheNightScenario = pikkuScenario<void, { 
       { text: 'Enter the shared passcode' },
       { actor: actors.sam },
     )
-    // The screen is locked, so nothing that runs the evening is on it yet.
     await scenario.then(
       'does not see the schedule control',
       'doesNotSeeText',

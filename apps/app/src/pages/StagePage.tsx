@@ -7,15 +7,6 @@ import { liveOnStage } from '@/lib/live'
 import { QrCode } from '@/components/QrCode'
 import { StageBoard } from '@/components/StageBoard'
 
-/**
- * The projected board — milestone 06. This is the one we put on the wall.
- *
- * Everything here is sized in `vw`/`vh` rather than px, because the only thing that
- * matters is the fraction of the projection a line of text occupies: the same page
- * is thrown at a 3m screen and a 55" TV, and both need the back row to read it.
- *
- * No shell, no navigation, nothing to click. Nobody is holding this screen.
- */
 export const StagePage: FC = () => {
   useLocale()
   const stage = usePikkuQuery('getStageView', {}, liveOnStage())
@@ -25,9 +16,6 @@ export const StagePage: FC = () => {
   const remaining = stage.data?.remaining ?? 0
   const interlude = current?.kind === 'interlude'
 
-  // The URL the room scans, taken from the browser rather than configured: this page
-  // is opened by typing an address into a laptop on a venue LAN, and whatever
-  // address worked for the laptop is the one that will work for the phones.
   const joinUrl = typeof window === 'undefined' ? '' : `${window.location.origin}/app`
 
   return (
@@ -62,8 +50,6 @@ export const StagePage: FC = () => {
           ) : null}
         </Box>
 
-        {/* The code stays up the whole time. Somebody arrives late during every
-            single talk, and they should never have to ask what the URL is. */}
         <Stack gap="0.6vh" align="center" style={{ flex: 'none' }}>
           <QrCode value={joinUrl} size={140} label={m.qr__title()} />
           <Text ff="monospace" c="dimmed" style={{ fontSize: '0.9vw' }}>

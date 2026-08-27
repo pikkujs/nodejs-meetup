@@ -15,20 +15,6 @@ export const MarkQuestionAnsweredOutput = z.object({
   answeredAt: z.string(),
 })
 
-/**
- * It has been asked out loud. Take it off the board.
- *
- * The row is stamped, never deleted: this is the app forgetting, not the database
- * losing. It disappears from every board immediately, on the phones and on the
- * wall — knowledge/decisions/design/the-board-is-a-queue.md.
- *
- * The one edit an organiser makes to somebody else's words, and it is not an edit
- * to the words.
- *
- * Marking an already-answered question again is a no-op that reports the ORIGINAL
- * timestamp. Two organisers with the passcode and one laptop each is the normal
- * case, and neither of them should see an error for agreeing.
- */
 export const markQuestionAnswered = pikkuSessionlessFunc({
   expose: true,
   auth: false,

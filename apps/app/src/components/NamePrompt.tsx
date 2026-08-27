@@ -4,21 +4,8 @@ import { m } from '@/i18n/messages'
 import { useLocale } from '@/i18n/config'
 import { useAttendee } from '@/lib/attendee'
 
-/** The server's cap, restated here so the phone refuses before the round trip does. */
 const MAX_NAME = 40
 
-/**
- * "You type your name once and it's remembered."
- *
- * Deliberately NOT a gate on the whole app. Reading tonight's schedule, the board
- * and the lightning list needs no name at all; this only appears at the moment
- * something you post would otherwise be anonymous, and never again after that.
- *
- * @param opened - The caller owns this, because the caller knows what the person
- *   was trying to do when they had no name yet.
- * @param onNamed - Fires once a name is stored, so the caller can finish the post
- *   the person had already written.
- */
 export const NamePrompt: FC<{
   opened: boolean
   onClose: () => void
@@ -28,8 +15,6 @@ export const NamePrompt: FC<{
   const { name, setName } = useAttendee()
   const [draft, setDraft] = useState('')
 
-  // Seeded on open, not on mount: opened a second time to CHANGE a name, the field
-  // should already hold the current one rather than make them retype it.
   useEffect(() => {
     if (opened) setDraft(name ?? '')
   }, [opened, name])
@@ -57,8 +42,6 @@ export const NamePrompt: FC<{
           value={draft}
           error={tooLong ? m.you__too_long() : undefined}
           onChange={(event) => setDraft(event.currentTarget.value)}
-          // Enter submits: this opens over a half-written question and the keyboard
-          // is already up.
           onKeyDown={(event) => {
             if (event.key === 'Enter') submit()
           }}

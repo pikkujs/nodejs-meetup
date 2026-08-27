@@ -5,18 +5,10 @@ import { TalkSchema } from './shared.js'
 export const ListScheduleInput = z.object({})
 
 export const ListScheduleOutput = z.object({
-  /** Tonight, in order, doors to doors. Interludes included — they are the evening too. */
   slots: z.array(TalkSchema),
   currentTalkId: z.string(),
 })
 
-/**
- * Tonight's running order, and which slot is on now.
- *
- * Sessionless and ungated: this is the first thing a phone loads after scanning
- * the code at the door, and there is nobody to be — see
- * knowledge/decisions/security/nobody-signs-in.md.
- */
 export const listSchedule = pikkuSessionlessFunc({
   expose: true,
   mcp: true,

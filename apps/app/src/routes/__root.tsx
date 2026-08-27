@@ -48,19 +48,12 @@ import { DefaultNotFoundPage } from '@/components/DefaultNotFoundPage'
 const LOCALE_KEY = 'app-locale'
 const THEME_KEY = 'app-theme'
 const COLOR_SCHEME_KEY = 'app-color-scheme'
-// The active theme id THEME_KEY was saved against — a preference only holds
-// while that theme is still the workspace's active one, so a builder-side
-// switch (which changes active.json) always wins over a stale local pick.
 const THEME_SAVED_ACTIVE_KEY = 'app-theme-saved-active'
 
 const fontsHref = googleFontsHref()
 
 const colorSchemeManager = localStorageColorSchemeManager({ key: COLOR_SCHEME_KEY })
 
-// Root route owns the full HTML document for SSR (<html lang dir> so the tree
-// mirrors for RTL locales) and wraps the app in the Mantine + react-query +
-// Pikku providers. Mantine v8 SSR needs ColorSchemeScript in <head> and
-// mantineHtmlProps on <html>; @mantine/core/styles.css ships the static CSS.
 function DirectionSync({ locale }: { locale: string }) {
   const { setDirection } = useDirection()
   useEffect(() => {
@@ -72,12 +65,6 @@ function DirectionSync({ locale }: { locale: string }) {
 export const Route = createRootRoute({
   head: () => ({ meta: appMeta }),
   notFoundComponent: DefaultNotFoundPage,
-  // Wrapped in the document, unlike notFoundComponent. A not-found renders
-  // through this route's Outlet so it already has <html> and the providers
-  // around it; an error *replaces* the root component, so without this wrapper
-  // the error page would be returned as a bare fragment — no document, no
-  // MantineProvider, no stylesheet — exactly when the user is already having a
-  // bad time.
   errorComponent: (props: ErrorComponentProps) => (
     <RootDocument>
       <DefaultErrorPage {...props} />
@@ -94,31 +81,15 @@ function RootComponent() {
   )
 }
 
-// The HTML document and providers. Takes children rather than rendering <Outlet />
-// itself so the error path above can reuse it: only the children differ.
 function RootDocument({ children }: { children: ReactNode }) {
-  // Seed from the build-time active theme (active.json) so the applied theme
-  // drives the initial + SSR render; useEffect syncs from localStorage after
-  // hydration. Seeding 'default' here was the "applied theme never shows" bug.
   const [themeId, setThemeIdRaw] = useState(activeId)
-  // Same idea for the locale: seed from the build-time default (i18n/active.json,
-  // the language this app's own users speak) so the FIRST paint — server-rendered
-  // <html lang dir> included — is already in it, then let a saved preference win
-  // after hydration. Widened to string because every consumer here takes one
-  // (setLocale, localeDir); `defaultLocale` is a literal union.
   const [locale, setLocaleRaw] = useState<string>(defaultLocale)
-  // Transient override from the fabric console live-preview (not persisted) —
-  // the console injects a full theme spec into the iframe so the builder sees
-  // the look instantly. Takes precedence over the persisted theme.
   const [previewTheme, setPreviewTheme] = useState<MantineThemeOverride | null>(null)
-  // The scheme that goes with the live-preview spec (a light style must render
-  // light), tracked alongside previewTheme so a preview flips the scheme too.
   const [previewScheme, setPreviewScheme] = useState<ColorScheme | null>(null)
 
   const effectiveTheme = previewTheme ?? themes[themeId] ?? activeTheme
   const defaultScheme: ColorScheme = themeColorSchemes[themeId] ?? activeColorScheme
 
-  // Sync preferences from localStorage after hydration.
   useEffect(() => {
     const savedTheme = localStorage.getItem(THEME_KEY)
     const savedAgainst = localStorage.getItem(THEME_SAVED_ACTIVE_KEY)
@@ -140,22 +111,13 @@ function RootDocument({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  // Keep <html lang dir> in sync with locale changes after hydration.
   useEffect(() => {
     document.documentElement.lang = locale
     document.documentElement.dir = localeDir(locale)
   }, [locale])
 
-  // One delegated listener for every `data-analytics-click` in the app,
-  // including portalled content (modals, menus, dropdowns) — see
-  // __fabric_analytics__/analytics-click.ts for why it must be capture-phase.
   useEffect(() => registerAnalyticsClickListener(), [])
 
-  // The matched route id (`/app/account`), not `location.pathname`. A pathname
-  // carries every id and slug the app has, and `path` is a queryable column on
-  // the raw stream — so the pathname version turns one series into thousands
-  // and puts identifiers into the analytics store. The route id is the same
-  // information at the cardinality of the route table.
   const routeId = useRouterState({
     select: (state) => state.matches.at(-1)?.routeId ?? state.location.pathname,
   })
@@ -163,9 +125,6 @@ function RootDocument({ children }: { children: ReactNode }) {
     recordEvent('page_viewed', { path: routeId })
   }, [routeId])
 
-  // Fabric console live-preview: postMessage injects a theme spec to override
-  // the active theme without persisting. Accepts `theme` (a full spec) or the
-  // legacy `palette`; null resets to the persisted theme.
   useEffect(() => {
     const onMessage = (event: MessageEvent) => {
       const data = event.data
@@ -196,15 +155,8 @@ function RootDocument({ children }: { children: ReactNode }) {
     setPreviewScheme(null)
   }
 
-  // Per-render instances keep server requests from sharing client/cache state.
   const [queryClient] = useState(() => new QueryClient())
   const [pikku] = useState(() =>
-    // PikkuRealtime is passed as the third class so a realtime stream would
-    // inherit the same serverUrl and credentials as HTTP and RPC — configured
-    // once, never twice. Nothing subscribes today (the UI polls, see
-    // lib/live.ts) and no connection is opened until something calls
-    // `usePikkuRealtime().subscribe`, so this costs a line and saves rewiring
-    // when the channel comes back.
     createPikku(PikkuFetch, PikkuRPC, PikkuRealtime, {
       serverUrl: apiUrl(),
       credentials: 'include',
@@ -219,11 +171,6 @@ function RootDocument({ children }: { children: ReactNode }) {
           defaultColorScheme={activeColorScheme}
           localStorageKey={COLOR_SCHEME_KEY}
         />
-        {/* Fabric's own tab mark (not app-specific — the app's identity is the
-            wordmark text, see Wordmark.tsx). Two variants so the tab icon reads
-            on both a light and a dark OS/browser chrome, picked natively via
-            prefers-color-scheme (no JS); each is a touch smaller/lighter than
-            the old single hardcoded-dark version. */}
         <link
           rel="icon"
           media="(prefers-color-scheme: light)"

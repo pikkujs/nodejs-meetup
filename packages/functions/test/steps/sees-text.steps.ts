@@ -10,7 +10,6 @@ export const SeesTextOutput = z.object({
   text: z.string(),
 })
 
-/** Wait for a string to appear on the page, failing with the driver's own timeout. */
 export const seesText = pikkuScenarioStep({
   name: 'seesText',
   description: 'waits for text to appear on the current page',
