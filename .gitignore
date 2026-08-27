@@ -32,3 +32,6 @@ __fabric_scaffold.vite.config.mjs
 
 # Fabric / tooling runtime artifacts
 .opencode
+
+# TanStack Router/Start build cache
+.tanstack/
