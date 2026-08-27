@@ -10,6 +10,11 @@
  * `scenarios.emailDomain` in pikku.config.json, so `priya` signs in as
  * priya@actors.local.
  *
+ * Job titles are lowercase because the scenario reporter is what reads them:
+ * `composeStepProse` writes the subject of a step as `<key> (the <jobTitle>)`,
+ * so a capitalised title renders "priya (the Attendee)" mid-sentence. The role
+ * is an apposition in English prose here, not a column heading.
+ *
  * NOTE ON SESSIONS: no attendee ever signs in to this app — see
  * knowledge/decisions/security/nobody-signs-in.md. These accounts exist ONLY so
  * pikku's scenario runner has a real session to drive a browser with; the product
@@ -24,14 +29,14 @@ import { definePersonas } from '#pikku/scopes/pikku-personas.gen.js'
 definePersonas({
   priya: {
     name: 'Priya',
-    jobTitle: 'Attendee',
+    jobTitle: 'attendee',
     personality: 'Front three rows, always has the question about backpressure',
     roles: ['attendee'],
     account: {},
   },
   marco: {
     name: 'Marco',
-    jobTitle: 'Attendee',
+    jobTitle: 'attendee',
     personality:
       'A SECOND attendee — exists so "one person, one vote" and "withdraw only your own" are testable at all',
     roles: ['attendee'],
@@ -39,7 +44,7 @@ definePersonas({
   },
   sam: {
     name: 'Sam',
-    jobTitle: 'Organiser',
+    jobTitle: 'organiser',
     personality: 'Holds the clicker and the passcode, and is running eight minutes late',
     roles: ['organiser'],
     account: {},
