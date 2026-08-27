@@ -31,7 +31,7 @@ export const everyPageLoadsScenario = pikkuScenario<void, { routes: string[] }>(
     // `repoRoot` is passed even though the schema defaults it: a step's input
     // type is the schema's OUTPUT, so a defaulted field is still required here.
     const swept = await scenario.then(
-      'every page loads without errors',
+      'loads every page without errors',
       'sweepsAllPages',
       { repoRoot: '.' },
       { actor: actors.priya },

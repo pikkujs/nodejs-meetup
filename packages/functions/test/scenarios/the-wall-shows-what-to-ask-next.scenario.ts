@@ -38,26 +38,26 @@ export const theWallShowsWhatToAskNextScenario = pikkuScenario<
     await scenario.given('the board is clear', 'theBoardIsEmpty', { slotId: 'slot-talk-1' })
 
     const asked = await scenario.do(
-      'priya has asked about backpressure',
+      'has asked about backpressure',
       'askQuestion',
       { body: BACKPRESSURE, authorName: 'Priya', attendeeId: PRIYA_DEVICE },
       { actor: actors.priya },
     )
     await scenario.do(
-      'marco has asked about worker threads',
+      'has asked about worker threads',
       'askQuestion',
       { body: WORKERS, authorName: 'Marco', attendeeId: MARCO_DEVICE },
       { actor: actors.marco },
     )
     await scenario.do(
-      'marco has upvoted the backpressure one',
+      'has upvoted the backpressure one',
       'upvoteQuestion',
       { questionId: asked.id, attendeeId: MARCO_DEVICE },
       { actor: actors.marco },
     )
 
     const wall = await scenario.then(
-      'the wall leads with the backpressure question, under the talk',
+      'sees the wall lead with the backpressure question, under the talk',
       'theWallShows',
       {
         talkTitle: 'Vibe coding is the easy part',

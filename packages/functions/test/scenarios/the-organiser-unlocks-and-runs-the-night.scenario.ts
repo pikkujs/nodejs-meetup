@@ -28,34 +28,34 @@ export const theOrganiserUnlocksAndRunsTheNightScenario = pikkuScenario<void, { 
     })
 
     const opened = await scenario.when(
-      'sam opens the organiser screen',
+      'opens the organiser screen',
       'opensPage',
       { path: '/app/organiser' },
       { actor: actors.sam },
     )
 
     await scenario.then(
-      'he is asked for the passcode',
+      'is asked for the passcode',
       'seesText',
       { text: 'Enter the shared passcode' },
       { actor: actors.sam },
     )
     // The screen is locked, so nothing that runs the evening is on it yet.
     await scenario.then(
-      'the schedule control is not on the screen',
+      'does not see the schedule control',
       'doesNotSeeText',
       { text: copy('organiser__advance') },
       { actor: actors.sam },
     )
 
     await scenario.when(
-      'he types the wrong passcode',
+      'types the wrong passcode',
       'fills',
       { testId: 'organiser__passcode', value: 'not-the-passcode' },
       { actor: actors.sam },
     )
     await scenario.when(
-      'he tries it',
+      'tries it',
       'clicks',
       { testId: 'organiser__unlock' },
       {
@@ -64,19 +64,19 @@ export const theOrganiserUnlocksAndRunsTheNightScenario = pikkuScenario<void, { 
     )
 
     await scenario.then(
-      'he is told it is wrong',
+      'is told it is wrong',
       'seesText',
       { text: "That's not the passcode" },
       { actor: actors.sam },
     )
     await scenario.then(
-      'the screen is still locked',
+      'sees the screen still locked',
       'doesNotSeeText',
       { text: copy('organiser__advance') },
       { actor: actors.sam },
     )
     await scenario.then(
-      'and the evening has not moved',
+      'sees the evening has not moved',
       'theRoomIsOn',
       { slotId: 'slot-talk-1' },
       { actor: actors.sam },

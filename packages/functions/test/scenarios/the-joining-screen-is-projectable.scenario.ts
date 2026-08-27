@@ -25,14 +25,14 @@ export const theJoiningScreenIsProjectableScenario = pikkuScenario<void, { path:
     }
 
     const opened = await scenario.when(
-      'the QR screen is projected',
+      'projects the QR screen',
       'opensPage',
       { path: '/app/qr' },
       { actor: actors.priya },
     )
 
     await scenario.then(
-      'the room is invited in',
+      'sees the room invited in',
       'seesText',
       { text: copy('qr__title') },
       {
@@ -40,7 +40,7 @@ export const theJoiningScreenIsProjectableScenario = pikkuScenario<void, { path:
       },
     )
     await scenario.then(
-      'the room is told what to do with the code',
+      'sees what to do with the code',
       'seesText',
       { text: 'Point a camera at this' },
       { actor: actors.priya },

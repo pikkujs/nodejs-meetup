@@ -33,35 +33,35 @@ export const anyoneCanSignUpForALightningTalkScenario = pikkuScenario<void, { po
     await scenario.given('the lightning list is empty', 'theLightningListIsEmpty', {})
 
     await scenario.do(
-      'marco signs up to talk about bun test runners',
+      'signs up to talk about bun test runners',
       'signUpForLightning',
       { name: 'Marco', topic: 'What bun test runners get right', attendeeId: MARCO_DEVICE },
       { actor: actors.marco },
     )
 
     const listed = await scenario.then(
-      'his name is on the list, and it is his',
+      'sees the slot on the list as their own',
       'theLightningListReads',
       { name: 'Marco', position: 1, attendeeId: MARCO_DEVICE, isYours: true, present: true },
       { actor: actors.marco },
     )
 
     await scenario.then(
-      'priya is not offered a way to withdraw it',
+      'is not offered a way to withdraw it',
       'theLightningListReads',
       { name: 'Marco', position: 1, attendeeId: PRIYA_DEVICE, isYours: false, present: true },
       { actor: actors.priya },
     )
 
     await scenario.do(
-      'marco withdraws his own',
+      'withdraws their own',
       'withdrawLightningSlot',
       { attendeeId: MARCO_DEVICE },
       { actor: actors.marco },
     )
 
     await scenario.then(
-      'he is off the list',
+      'is off the list',
       'theLightningListReads',
       { name: 'Marco', present: false, attendeeId: MARCO_DEVICE },
       { actor: actors.marco },

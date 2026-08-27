@@ -29,21 +29,21 @@ export const aQuestionComesOffTheBoardScenario = pikkuScenario<void, { remaining
     await scenario.given('the board is clear', 'theBoardIsEmpty', { slotId: 'slot-talk-1' })
 
     const asked = await scenario.do(
-      'priya has asked about backpressure',
+      'has asked about backpressure',
       'askQuestion',
       { body: BACKPRESSURE, authorName: 'Priya', attendeeId: PRIYA_DEVICE },
       { actor: actors.priya },
     )
 
     await scenario.when(
-      'sam marks it answered',
+      'marks it answered',
       'theOrganiserActs',
       { action: 'markQuestionAnswered', questionId: asked.id },
       { actor: actors.sam },
     )
 
     const board = await scenario.then(
-      'it is gone from the board',
+      'no longer sees it on the board',
       'theBoardReads',
       { absent: BACKPRESSURE, count: 0, attendeeId: PRIYA_DEVICE },
       { actor: actors.priya },

@@ -37,7 +37,7 @@ export const aFirstTimerNamesThemselvesAndAsksScenario = pikkuScenario<void, { a
     await scenario.given('the board is clear', 'theBoardIsEmpty', { slotId: 'slot-talk-1' })
 
     await scenario.when(
-      'priya opens the board',
+      'opens the board',
       'opensPage',
       { path: '/app/questions' },
       {
@@ -45,13 +45,13 @@ export const aFirstTimerNamesThemselvesAndAsksScenario = pikkuScenario<void, { a
       },
     )
     await scenario.when(
-      'she types her question',
+      'types the question',
       'fills',
       { testId: 'questions__placeholder', value: QUESTION },
       { actor: actors.priya },
     )
     await scenario.when(
-      'she posts it',
+      'posts it',
       'clicks',
       { testId: 'questions__cta' },
       {
@@ -61,13 +61,13 @@ export const aFirstTimerNamesThemselvesAndAsksScenario = pikkuScenario<void, { a
 
     // Only now is she asked who she is.
     await scenario.when(
-      'she gives her name',
+      'gives a name',
       'fills',
       { testId: 'common__name', value: 'Priya' },
       { actor: actors.priya },
     )
     await scenario.when(
-      'she confirms it',
+      'confirms it',
       'clicks',
       { testId: 'you__cta' },
       {
@@ -76,7 +76,7 @@ export const aFirstTimerNamesThemselvesAndAsksScenario = pikkuScenario<void, { a
     )
 
     await scenario.then(
-      'her question is on the board',
+      'sees the question on the board',
       'seesText',
       { text: QUESTION },
       {
@@ -84,7 +84,7 @@ export const aFirstTimerNamesThemselvesAndAsksScenario = pikkuScenario<void, { a
       },
     )
     await scenario.then(
-      'it carries her name',
+      'sees the name on it',
       'seesText',
       { text: 'Priya' },
       {
@@ -94,7 +94,7 @@ export const aFirstTimerNamesThemselvesAndAsksScenario = pikkuScenario<void, { a
 
     // The remembering, proven across a full page load rather than a re-render.
     await scenario.then(
-      'she reopens the board',
+      'reopens the board',
       'opensPage',
       { path: '/app/questions' },
       {
@@ -102,7 +102,7 @@ export const aFirstTimerNamesThemselvesAndAsksScenario = pikkuScenario<void, { a
       },
     )
     await scenario.then(
-      'she is not asked for her name again',
+      'is not asked for a name again',
       'doesNotSeeText',
       { text: copy('you__title') },
       { actor: actors.priya },

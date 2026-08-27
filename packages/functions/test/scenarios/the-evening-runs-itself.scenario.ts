@@ -44,7 +44,7 @@ export const theEveningRunsItselfScenario = pikkuScenario<void, { passedThrough:
     })
 
     await scenario.when(
-      'sam starts the night with second-long slots',
+      'starts the night with second-long slots',
       'theOrganiserActs',
       { action: 'startMeetupRun', talkDuration: '1s', interludeDuration: '1s' },
       { actor: actors.sam },
@@ -53,14 +53,14 @@ export const theEveningRunsItselfScenario = pikkuScenario<void, { passedThrough:
     // The first talk, not the first slot: reaching it proves the workflow advanced the
     // room twice on its own, which a run that merely started would not have done.
     await scenario.then(
-      'the room reaches the first talk on its own',
+      'sees the room reach the first talk on its own',
       'theRoomReaches',
       { slotId: 'slot-talk-1', withinMs: 30_000 },
       { actor: actors.sam },
     )
 
     const finished = await scenario.then(
-      'and keeps going to the end of the night',
+      'sees it keep going to the end of the night',
       'theRoomReaches',
       { slotId: 'slot-close', withinMs: 30_000 },
       { actor: actors.sam },

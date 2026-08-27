@@ -26,7 +26,7 @@ export const thereIsNothingToAskDuringTheBreakScenario = pikkuScenario<void, { s
     })
 
     await scenario.when(
-      'marco opens the board',
+      'opens the board',
       'opensPage',
       { path: '/app/questions' },
       {
@@ -35,13 +35,13 @@ export const thereIsNothingToAskDuringTheBreakScenario = pikkuScenario<void, { s
     )
 
     await scenario.then(
-      'he is told what is happening',
+      'is told what is happening',
       'seesText',
       { text: 'Nothing is on stage right now' },
       { actor: actors.marco },
     )
     await scenario.then(
-      'he is not offered a composer',
+      'is not offered a composer',
       'doesNotSeeText',
       { text: 'Ask the speaker something' },
       { actor: actors.marco },

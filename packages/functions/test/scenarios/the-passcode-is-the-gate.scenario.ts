@@ -31,14 +31,14 @@ export const thePasscodeIsTheGateScenario = pikkuScenario<void, { status: number
     })
 
     const refused = await scenario.then(
-      'priya is refused the schedule',
+      'is refused the schedule',
       'isRefused',
       { rpcName: 'advanceSchedule', passcode: 'not-the-passcode' },
       { actor: actors.priya },
     )
 
     await scenario.then(
-      'talk one is still the current slot',
+      'sees talk one is still the current slot',
       'theRoomIsOn',
       { slotId: 'slot-talk-1' },
       { actor: actors.priya },

@@ -28,7 +28,7 @@ export const theRoomSeesWhatIsOnNowScenario = pikkuScenario<void, { path: string
     })
 
     const opened = await scenario.when(
-      'priya opens the app',
+      'opens the app',
       'opensPage',
       { path: '/app' },
       {
@@ -39,7 +39,7 @@ export const theRoomSeesWhatIsOnNowScenario = pikkuScenario<void, { path: string
     // The word and the title together: the badge alone appears on any slot, and the
     // title alone appears whether or not it is pinned.
     await scenario.then(
-      'she sees the evening is on talk one',
+      'sees the evening is on talk one',
       'seesText',
       { text: copy('tonight__now') },
       {
@@ -47,7 +47,7 @@ export const theRoomSeesWhatIsOnNowScenario = pikkuScenario<void, { path: string
       },
     )
     await scenario.then(
-      'she sees which talk that is',
+      'sees which talk that is',
       'seesText',
       { text: 'Vibe coding is the easy part' },
       { actor: actors.priya },
@@ -55,7 +55,7 @@ export const theRoomSeesWhatIsOnNowScenario = pikkuScenario<void, { path: string
     // A later slot, with its time — proof the rest of the evening is on the page and
     // not just the one card.
     await scenario.then(
-      'she sees a later slot with its time',
+      'sees a later slot with its time',
       'seesText',
       { text: '20:00' },
       { actor: actors.priya },

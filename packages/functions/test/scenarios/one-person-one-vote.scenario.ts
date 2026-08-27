@@ -31,20 +31,20 @@ export const onePersonOneVoteScenario = pikkuScenario<void, { votes: number }>({
     await scenario.given('the board is clear', 'theBoardIsEmpty', { slotId: 'slot-talk-1' })
 
     const asked = await scenario.do(
-      'a question is on the board',
+      'asks about backpressure',
       'askQuestion',
       { body: BACKPRESSURE, authorName: 'Marco', attendeeId: MARCO_DEVICE },
       { actor: actors.marco },
     )
     await scenario.do(
-      'marco has upvoted it',
+      'has upvoted it',
       'upvoteQuestion',
       { questionId: asked.id, attendeeId: MARCO_DEVICE },
       { actor: actors.marco },
     )
 
     const refused = await scenario.then(
-      'a second vote is refused and the count holds',
+      'is refused a second vote, and the count holds',
       'theVoteIsRefused',
       { questionId: asked.id, attendeeId: MARCO_DEVICE, votes: 1 },
       { actor: actors.marco },

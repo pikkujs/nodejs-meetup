@@ -29,21 +29,21 @@ export const theOrganiserAdvancesTheEveningScenario = pikkuScenario<void, { nowO
     // evening without first getting past this screen, and it is the only call that
     // exists purely to answer "is this the passcode?".
     await scenario.given(
-      'sam unlocks the console with the passcode',
+      'unlocks the console with the passcode',
       'theOrganiserActs',
       { action: 'checkOrganiserPasscode' },
       { actor: actors.sam },
     )
 
     await scenario.when(
-      'sam advances the schedule with the passcode',
+      'advances the schedule with the passcode',
       'theOrganiserActs',
       { action: 'advanceSchedule' },
       { actor: actors.sam },
     )
 
     const seen = await scenario.then(
-      "the room's schedule shows the break as now",
+      "sees the room's schedule show the break as now",
       'theRoomIsOn',
       { slotId: 'slot-break' },
       { actor: actors.priya },

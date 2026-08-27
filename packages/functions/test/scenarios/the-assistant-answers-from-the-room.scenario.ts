@@ -37,14 +37,14 @@ export const theAssistantAnswersFromTheRoomScenario = pikkuScenario<void, { answ
     await scenario.given('the board is clear', 'theBoardIsEmpty', { slotId: 'slot-talk-1' })
 
     await scenario.do(
-      'priya has asked about backpressure',
+      'has asked about backpressure',
       'askQuestion',
       { body: BACKPRESSURE, authorName: 'Priya', attendeeId: PRIYA_DEVICE },
       { actor: actors.priya },
     )
 
     const asked = await scenario.when(
-      'sam asks for the room in one line',
+      'asks for the room in one line',
       'theHostAsksTheirAssistant',
       { message: 'What has the room asked so far tonight? Keep it to one line.' },
       { actor: actors.sam },

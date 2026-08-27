@@ -38,27 +38,27 @@ export const theMostWantedQuestionRisesScenario = pikkuScenario<
     await scenario.given('the board is clear', 'theBoardIsEmpty', { slotId: 'slot-talk-1' })
 
     const asked = await scenario.do(
-      'priya asks about backpressure',
+      'asks about backpressure',
       'askQuestion',
       { body: BACKPRESSURE, authorName: 'Priya', attendeeId: PRIYA_DEVICE },
       { actor: actors.priya },
     )
     await scenario.do(
-      'marco asks about worker threads',
+      'asks about worker threads',
       'askQuestion',
       { body: WORKERS, authorName: 'Marco', attendeeId: MARCO_DEVICE },
       { actor: actors.marco },
     )
 
     await scenario.do(
-      'marco upvotes the backpressure question',
+      'upvotes the backpressure question',
       'upvoteQuestion',
       { questionId: asked.id, attendeeId: MARCO_DEVICE },
       { actor: actors.marco },
     )
 
     const board = await scenario.then(
-      'the backpressure question is at the top',
+      'sees the backpressure question at the top',
       'theBoardReads',
       { top: BACKPRESSURE, count: 2, attendeeId: MARCO_DEVICE },
       { actor: actors.marco },
