@@ -57,6 +57,14 @@
     "coverage": {
       "apiUrl": "http://localhost:4010",
       "signInPath": "/api/auth/sign-in/actor"
+    },
+    "stage": {
+      "apiUrl": "https://nodejs-meetup-e6vglqcv.pikkufabric.dev",
+      "signInPath": "/api/auth/sign-in/actor",
+      "rpcPath": "/api/rpc"
     }
+  },
+  "models": {
+    "default": "openai/glm-5.3-flash"
   }
 }

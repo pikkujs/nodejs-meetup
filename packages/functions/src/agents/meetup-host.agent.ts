@@ -1,5 +1,6 @@
 import { pikkuAgent } from '#pikku/agent/pikku-agent-types.gen.js'
 import { ref } from '#pikku/function'
+import { agentProviderOptions } from './model.js'
 
 export const meetupHost = pikkuAgent({
   name: 'meetup-host',
@@ -14,7 +15,8 @@ export const meetupHost = pikkuAgent({
 - put a question on the board when the host dictates one
 
 When you summarise, group by theme rather than repeating every question verbatim, and say how many there were. When you are asked something the tools cannot answer, say so plainly rather than guessing.`,
-  model: 'openai/gpt-5-mini',
+  model: 'default',
+  providerOptions: agentProviderOptions,
   tools: [ref('listAllQuestions'), ref('listSchedule'), ref('askQuestion')],
   maxSteps: 6,
   auth: false,

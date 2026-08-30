@@ -26,7 +26,7 @@ export const readAloud = pikkuAgentScorer({
 export const grounded = pikkuAgentJudge({
   name: 'grounded',
   description: 'Whether the answer is backed by a tool call rather than invented.',
-  model: 'openai/gpt-5-mini',
+  model: 'default',
   sampleRate: 0.1,
   toolCalls: 'names',
   goal: `You are grading the assistant to the host of a Node.js meetup. It has tools for reading the night's questions and running order, and it is forbidden to invent a question nobody asked.
