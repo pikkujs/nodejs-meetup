@@ -17,7 +17,7 @@
     "@mantine/hooks": "^9.2.1",
     "@pikku/assistant-ui": "^0.12.12",
     "@pikku/mantine": "^0.12.12",
-    "@pikku/react": "^0.12.9",
+    "@pikku/react": "^0.12.10",
     "@project/functions-sdk": "workspace:*",
     "@project/mantine-themes": "workspace:*",
     "@tanstack/react-form": "^1.0.0",

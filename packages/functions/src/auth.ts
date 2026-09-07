@@ -1,8 +1,12 @@
 import { betterAuth } from 'better-auth'
-import { actor, ban, fabric } from '@pikku/better-auth'
+import { pikkuActor, pikkuBan, pikkuFabric } from '@pikku/better-auth'
+import {
+  personaConfigs,
+  personaEnvironments,
+} from '#pikku/scenarios/pikku-personas.gen.js'
 import { pikkuBetterAuth } from '#pikku/auth'
 
-export const auth = pikkuBetterAuth(async ({ kysely, secrets, variables, emailService }) => {
+export const auth = pikkuBetterAuth(async ({ kysely, secrets, variables, emailService, scopeService, logger }) => {
   const BETTER_AUTH_SECRET = (await secrets.getSecret('BETTER_AUTH_SECRET')).reveal()
   const SCENARIO_ACTOR_SECRET = (await secrets.getSecret('SCENARIO_ACTOR_SECRET'))?.reveal()
   const FABRIC_AUTH_PUBLIC_KEY = await variables.get('FABRIC_AUTH_PUBLIC_KEY')
@@ -26,11 +30,17 @@ export const auth = pikkuBetterAuth(async ({ kysely, secrets, variables, emailSe
     session: { cookieCache: { enabled: true } },
     advanced: { database: { generateId: 'uuid' } },
     plugins: [
-      actor({ secret: SCENARIO_ACTOR_SECRET }),
-      ban(),
-      fabric({
+      pikkuActor({ secret: SCENARIO_ACTOR_SECRET }),
+      pikkuBan(),
+      pikkuFabric({
         publicKey: FABRIC_AUTH_PUBLIC_KEY,
         audience: FABRIC_STAGE_ID,
+        scopeService,
+        logger,
+        personas: {
+          personas: personaConfigs,
+          environments: personaEnvironments,
+        },
       }),
     ],
   })
